@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Image
 } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import UserMap from "../components/UserMap";
@@ -49,8 +50,32 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Social")}
             >
-              <Text style={styles.titleText}>Social</Text>
-              <Text style={styles.blankSpace} />
+              <View style = {styles.socialCard}>
+                <Image
+                  source={require("../assets/images/RyRy.jpg")}
+                  style={styles.profilePicture}
+                />
+                <View style = {styles.socialText}>
+                  <Text style = {styles.titleText2}> Rylan Deck</Text>
+                  <Text style = {styles.subText}>       Daily Distance: </Text>
+                  <Text style = {styles.subText}>       Weekly Distance: </Text>
+                </View>
+              </View>
+              <View style = {styles.friendsContainer}>
+                <Image
+                  source={require("../assets/images/Alex.jpg")}
+                  style={styles.friendPicture}
+                />
+                <Image
+                  source={require("../assets/images/Ben.jpg")}
+                  style={styles.friendPicture}
+                />
+                <Image
+                  source={require("../assets/images/Rick.jpg")}
+                  style={styles.friendPicture}
+                />
+              </View>
+              <View style = {styles.blankSpace}></View>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -67,7 +92,7 @@ const styles = StyleSheet.create({
   topContentContainer: {
     paddingTop: 10,
     borderTopWidth: 0,
-    backgroundColor: "#DDDDDD"
+    backgroundColor: "#FAFAFAFA"
   },
   contentContainer: {
     paddingTop: 10,
@@ -81,13 +106,56 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 14
   },
+  titleText2: {
+    fontSize: 24,
+    color: "#838383",
+    textAlign: "left",
+    paddingTop: 14
+  },
   //This is just used as filler space for containers that don't have their content available yet.
   blankSpace: {
-    paddingTop: 200
+    paddingTop: 100
   },
   map: {
     ...StyleSheet.absoluteFillObject
   },
   //This shouldn't work, but it does. Without this, map doesn't appear. Will be fixed soon.
-  mapText: { height: 250 }
+  mapText: { height: 250 },
+  profilePicture: {
+    width: 90,
+    height: 90,
+    resizeMode: "contain",
+    marginVertical: 20,
+    marginLeft: 15,
+    borderRadius: 190,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1
+  },
+  socialCard: {
+    flexDirection: "row"
+  },
+  socialText: {
+    flexDirection: "column",
+    flex: 2
+  },
+  subText: {
+    fontSize: 16,
+    color: "#838383",
+    paddingVertical: 4
+  },
+  friendsContainer:{
+    flexDirection: 'row',
+    height: 50,
+    paddingVertical: 20
+  },
+  friendPicture: {
+    width: 47,
+    height: 47,
+    resizeMode: "contain",
+    marginHorizontal: 10,
+    borderRadius: 1000,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
