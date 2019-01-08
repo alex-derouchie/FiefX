@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import UserChart from "../components/UserChart";
+import UserMap from "../components/UserMap";
+import * as Progress from 'react-native-progress';
 
 /*
 This class represents the Analytics/Statistics page of the app. Currently,
@@ -29,16 +31,26 @@ export default class StatsScreen extends React.Component {
 
           <View style={styles.contentContainer}>
             <Text style={styles.titleText}>Today</Text>
-            <Text style={styles.blankSpace} />
+            <View style={styles.todayStyle}>
+              <View style={styles.pieBox}>
+                <Progress.Pie progress={0.8} color="#33FF11" size={150}/>
+              </View>
+              <View style={styles.todayTextBox}>
+                <Text style={styles.todayText1}> Distance Goal: 10km</Text>
+                <Text style={styles.todayText1}> Progress: 8km</Text>
+              </View>
+            </View>
           </View>
 
           <View style={styles.contentContainer}>
+            <Text style={styles.titleText}>Map View</Text>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Map")}
             >
-              <Text style={styles.titleText}>Map View</Text>
-              <Text style={styles.blankSpace} />
+              <Text style={styles.blankSpace}></Text>
+              <UserMap/>
             </TouchableOpacity>
+            <Text style={styles.blankSpace}/>
           </View>
         </ScrollView>
       </View>
@@ -68,6 +80,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14
   },
   blankSpace: {
-    paddingTop: 200
+    paddingTop: 300
+  },
+  todayStyle:{
+    padding: 15,
+    flexDirection:'row'
+  },
+  todayText1:{
+    textAlign: "left",
+    color: "#a1a1a1",
+    fontSize: 18,
+  },
+  todayText2:{
+    textAlign: "left",
+    color: "#a1a1a1",
+    fontSize: 14,
+  },
+  todayTextBox:{
+    flexDirection:'column',
+    flex:4
+  },
+  pieBox:{
+    flex:3,
+    padding:5
   }
 });

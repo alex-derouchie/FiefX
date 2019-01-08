@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import {VictoryPie} from 'victory-native';
+import * as Progress from 'react-native-progress';
 
 /*
 This class represents the Social page of the app. It displays primitive information about
@@ -40,12 +41,56 @@ export default class SocialScreen extends React.Component {
           </View>
           <View style={styles.contentContainer}>
             <Text style={styles.containerTitle}>Friends</Text>
-            <Text style={styles.smallText}>There are no friends</Text>
-            <Text style={styles.blankSpace} />
+            <View style={styles.friendsContainer}>
+              <Image
+                source={require("../assets/images/Alex.jpg")}
+                style={styles.friendPicture}
+              />
+              <View style={styles.friendTextBox}>
+                <Text style={styles.friendText1}>Alex Derouchie</Text>
+                <Text style={styles.friendText2}>   Distance: </Text>
+              </View>
+            </View>
+            <View style={styles.friendsContainer}>
+              <Image
+                source={require("../assets/images/Ben.jpg")}
+                style={styles.friendPicture}
+              />
+              <View style={styles.friendTextBox}>
+                <Text style={styles.friendText1}>Ben Kluge</Text>
+                <Text style={styles.friendText2}>   Distance: </Text>
+              </View>
+            </View>
+            <View style={styles.friendsContainer}>
+              <Image
+                source={require("../assets/images/Rick.jpg")}
+                style={styles.friendPicture}
+              />
+              <View style={styles.friendTextBox}>
+                <Text style={styles.friendText1}>Rick Astley</Text>
+                <Text style={styles.friendText2}>   Distance: </Text>
+              </View>
+            </View>
           </View>
           <View style={styles.contentContainer}>
             <Text style={styles.containerTitle}>Milestones/Achievements</Text>
-            <Text style={styles.blankSpace} />
+            <View style={styles.achievementBox}>
+              <Text style={styles.achievementText}> Travel 1000 Kilometers</Text>
+              <Progress.Bar progress={0.3} color="#81d3ee" />
+            </View>
+            <View style={styles.achievementBox}>
+              <Text style={styles.achievementText}> Travel 10 Kilometers in one day</Text>
+              <Progress.Bar progress={0.6} color="#81d3ee" />
+            </View>
+            <View style={styles.achievementBox}>
+              <Text style={styles.achievementText}> Travel for one hour</Text>
+              <Progress.Bar progress={0.2} color="#81d3ee" />
+            </View>
+            <View style={styles.achievementBox}>
+              <Text style={styles.achievementText}> Travel in a different city</Text>
+              <Progress.Bar progress={1} color="#00FF88" />
+            </View>
+            <View style={styles.blankSpace}/>
           </View>
         </ScrollView>
       </View>
@@ -78,6 +123,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  friendPicture: {
+    width: 80,
+    height: 80,
+    resizeMode: "contain",
+    borderRadius: 2000,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 25,
+    flex: 1
+  },
   userName: {
     textAlign: "center",
     color: "#81d3ee",
@@ -87,7 +143,28 @@ const styles = StyleSheet.create({
   containerTitle: {
     textAlign: "center",
     color: "#a1a1a1",
-    fontSize: 22
+    fontSize: 22,
+    paddingVertical: 5
+  },
+  friendText1:{
+    textAlign: "left",
+    color: "#a1a1a1",
+    fontSize: 18,
+  },
+  friendText2:{
+    textAlign: "left",
+    color: "#a1a1a1",
+    fontSize: 14,
+  },
+  achievementText:{
+    textAlign: "left",
+    color: "#a1a1a1",
+    fontSize: 18,
+    paddingBottom: 10,
+    paddingTop: 17
+  },
+  achievementBox:{
+    padding: 10
   },
   blankSpace: {
     paddingTop: 200
@@ -97,5 +174,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 12,
     marginBottom: 12
+  },
+  friendsContainer: {
+    flexDirection: "row",
+    padding: 10
+  },
+  friendTextBox:{
+    flexDirection:'column',
+    paddingHorizontal: 20,
+    flex: 2
   }
 });

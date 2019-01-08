@@ -29,6 +29,7 @@ export default class HomeScreen extends React.Component {
           contentContainerStyle={styles.topContentContainer}
         >
           <View style={styles.topContentContainer}>
+            <Text style={styles.titleText}>Map</Text>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Map")}
             >
