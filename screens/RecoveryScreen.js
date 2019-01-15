@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
+import Color from "../constants/Colors";
 
 /*
 This class represents the Password Recovery page of the app. In the future, it will
@@ -40,7 +41,7 @@ export default class RecoveryScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#81d3ee"
+    backgroundColor: Color.themeColor
   },
   blankSpace: {
     paddingTop: 100

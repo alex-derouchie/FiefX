@@ -10,6 +10,7 @@ import {
   ScrollView
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
+import Color from "../constants/Colors";
 
 /*
 This class represents the Signup page of the app. It asks the user to provide
@@ -31,7 +32,7 @@ export default class SignupScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: "#81d3ee", flex: 1 }}>
+      <ScrollView style={{ backgroundColor: Color.themeColor, flex: 1 }}>
         <Text style={styles.blankSpace} />
         <View>
           <TouchableOpacity
@@ -120,7 +121,7 @@ export default class SignupScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#81d3ee"
+    backgroundColor: Color.themeColor
   },
   blankSpace: {
     paddingTop: 100

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import TabBarIcon from "../components/TabBarIcon";
+import Color from "../constants/Colors";
 
 /*
 This class represents the Lock page of the app. It is a non-scrollable screen
@@ -44,14 +45,14 @@ export default class LockScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#81d3ee"
+    backgroundColor: Color.themeColor
   },
   blankSpace: {
     paddingTop: 120
   },
   background: {
     flex: 1,
-    backgroundColor: "#81d3ee"
+    backgroundColor: Color.themeColor
   },
   center: {
     alignItems: "center"

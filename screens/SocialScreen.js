@@ -3,6 +3,8 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import {VictoryPie} from 'victory-native';
 import * as Progress from 'react-native-progress';
+import Colors from "../constants/Colors";
+import { connect } from 'react-redux';
 
 /*
 This class represents the Social page of the app. It displays primitive information about
@@ -10,8 +12,16 @@ the user, mainly the information that is visible to the users' friends, as well 
 the same type of data corresponding to the users' added friends. This is the Users' hub to
 of the app's social features.
 */
-export default class SocialScreen extends React.Component {
-  static navigationOptions = NavigationOptions.navigationOptions;
+class SocialScreen extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Rylan Deck"
+    };
+  }
+
+  static navigationOptions = NavigationOptions.navigationOptions;  
 
   //In the future, the majority of the data being displayed in the app will come from the
   //database, but for now, mostly placeholders.0
@@ -26,12 +36,12 @@ export default class SocialScreen extends React.Component {
             />
           </View>
 
-          <Text style={styles.userName}>Rylan Deck</Text>
+          <Text style={styles.userName}>{this.props.name}</Text>
           <View style={styles.contentContainer}>
             <VictoryPie
             innerRadius={90}
             radius={105}
-            colorScale={["#81d3ee", "#B0B0B0", "blue" ]}
+            colorScale={[Colors.themeColor, "#B0B0B0", "blue" ]}
              data={[
                 { x: 1, y: 2, label: "Monday"},
                 { x: 2, y: 3, label: "Tuesday"},
@@ -75,16 +85,16 @@ export default class SocialScreen extends React.Component {
           <View style={styles.contentContainer}>
             <Text style={styles.containerTitle}>Milestones/Achievements</Text>
             <View style={styles.achievementBox}>
-              <Text style={styles.achievementText}> Travel 1000 Kilometers</Text>
-              <Progress.Bar progress={0.3} color="#81d3ee" />
+              <Text style={styles.achievementText}> Travel 10000 Kilometers</Text>
+              <Progress.Bar progress={0.3} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel 10 Kilometers in one day</Text>
-              <Progress.Bar progress={0.6} color="#81d3ee" />
+              <Progress.Bar progress={0.6} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel for one hour</Text>
-              <Progress.Bar progress={0.2} color="#81d3ee" />
+              <Progress.Bar progress={0.2} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel in a different city</Text>
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     textAlign: "center",
-    color: "#81d3ee",
+    color: Colors.themeColor,
     fontSize: 28,
     marginBottom: 20
   },
@@ -185,3 +195,12 @@ const styles = StyleSheet.create({
     flex: 2
   }
 });
+
+
+function mapStateToProps(state){
+  return {
+    name: state.profile
+  }
+}
+
+export default connect(mapStateToProps, null)(SocialScreen);

@@ -9,6 +9,7 @@ import {
   Alert
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
+import Color from "../constants/Colors";
 
 /*
 This class represents the Login page of the app. It is the root of the 
@@ -103,7 +104,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#81d3ee"
+    backgroundColor: Color.themeColor
   },
   //Provides some whitespace between components to space things out nicely.
   blankSpace: {

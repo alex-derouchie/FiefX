@@ -10,6 +10,7 @@ import {
 import NavigationOptions from "../components/MainNavigationOptions";
 import UserMap from "../components/UserMap";
 import UserChart from "../components/UserChart";
+import Color from "../constants/Colors";
 
 /*
 This class represents the Home page of the app. It is mainly
