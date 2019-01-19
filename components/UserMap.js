@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import MapView from "react-native-maps";
-import Marker from "react-native-maps";
 
 //This object exports a component that returns a Map object to be rendered by the calling component.
 const UserMap = props => {
@@ -16,10 +15,19 @@ const UserMap = props => {
           longitudeDelta: 0.0221
         }}
       >
+      <MapView.Marker coordinate={markerLocation}
+        opacity= {0.7}
+        image={require("../assets/images/Bike.png")}
+      />
       </MapView>
     </View>
   );
 };
+
+const markerLocation = {
+  latitude: 45.4216,
+  longitude: -75.6759
+}
 
 const styles = StyleSheet.create({
   container: {

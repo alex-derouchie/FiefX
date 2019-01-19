@@ -36,7 +36,7 @@ class SocialScreen extends React.Component {
             />
           </View>
 
-          <Text style={styles.userName}>{this.props.name}</Text>
+          <Text style={styles.userName}>{this.props.profile.profileName}</Text>
           <View style={styles.contentContainer}>
             <VictoryPie
             innerRadius={90}
@@ -86,19 +86,19 @@ class SocialScreen extends React.Component {
             <Text style={styles.containerTitle}>Milestones/Achievements</Text>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel 10000 Kilometers</Text>
-              <Progress.Bar progress={0.3} color= {Colors.themeColor} />
+              <Progress.Bar progress={this.props.profile.achievements[0]} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel 10 Kilometers in one day</Text>
-              <Progress.Bar progress={0.6} color= {Colors.themeColor} />
+              <Progress.Bar progress={this.props.profile.achievements[1]} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel for one hour</Text>
-              <Progress.Bar progress={0.2} color= {Colors.themeColor} />
+              <Progress.Bar progress={this.props.profile.achievements[2]} color= {Colors.themeColor} />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel in a different city</Text>
-              <Progress.Bar progress={1} color="#00FF88" />
+              <Progress.Bar progress={this.props.profile.achievements[3]} color="#00FF88" />
             </View>
             <View style={styles.blankSpace}/>
           </View>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return {
-    name: state.profile
+    profile: state.profile
   }
 }
 

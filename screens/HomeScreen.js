@@ -10,13 +10,13 @@ import {
 import NavigationOptions from "../components/MainNavigationOptions";
 import UserMap from "../components/UserMap";
 import UserChart from "../components/UserChart";
-import Color from "../constants/Colors";
+import { connect } from 'react-redux';
 
 /*
 This class represents the Home page of the app. It is mainly
 responsible for initiating the components of the page and applying styling to them.
 */
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   //This Object represents the top bar across the app and
   //handles the components and styling contained within the bar.
   static navigationOptions = NavigationOptions.navigationOptions;
@@ -59,8 +59,8 @@ export default class HomeScreen extends React.Component {
                 />
                 <View style = {styles.socialText}>
                   <Text style = {styles.titleText2}> Rylan Deck</Text>
-                  <Text style = {styles.subText}>       Daily Distance: </Text>
-                  <Text style = {styles.subText}>       Weekly Distance: </Text>
+                  <Text style = {styles.subText}>{'       Daily Distance: '} {this.props.profile.dailyDistances[5]} {'Km'}</Text>
+                  <Text style = {styles.subText}>{'       Weekly Distance: '} {this.props.profile.weeklyDistance} {'Km'}</Text>
                 </View>
               </View>
               <View style = {styles.friendsContainer}>
@@ -161,3 +161,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+
+function mapStateToProps(state){
+  return {
+    profile: state.profile
+  }
+}
+
+export default connect(mapStateToProps, null)(HomeScreen);

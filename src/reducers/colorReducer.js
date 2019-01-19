@@ -1,5 +1,5 @@
 
-export default (state = "#81d3ee", action) => {
+export default (state = "green", action) => {
     switch(action.type) {
         case 'GREEN':
             return 'green';
