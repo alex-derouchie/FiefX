@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import { VictoryPie } from "victory-native";
 import * as Progress from "react-native-progress";
@@ -14,16 +7,15 @@ import Colors from "../constants/Colors";
 import { connect } from "react-redux";
 
 /*
-This class represents the Social page of the app. It displays primitive information about
-the user, mainly the information that is visible to the users' friends, as well as displaying
-the same type of data corresponding to the users' added friends. This is the Users' hub to
-of the app's social features.
+This class represents the profile page of the app. It displays information about
+the user's friends, such as weekly travel distances, achievements, recent activity
+and more. 
 */
-class SocialScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Rylan Deck"
+      name: ""
     };
   }
 
@@ -37,7 +29,7 @@ class SocialScreen extends React.Component {
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
             <Image
-              source={require("../assets/images/RyRy.jpg")}
+              source={require("../assets/images/Alex.jpg")}
               style={styles.profilePicture}
             />
           </View>
@@ -56,22 +48,7 @@ class SocialScreen extends React.Component {
             />
           </View>
           <View style={styles.contentContainer}>
-            <Text style={styles.containerTitle}>Friends</Text>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Profile")}
-            >
-              <View style={styles.friendsContainer}>
-                <Image
-                  source={require("../assets/images/Alex.jpg")}
-                  style={styles.friendPicture}
-                />
-                <View style={styles.friendTextBox}>
-                  <Text style={styles.friendText1}>Alex Derouchie</Text>
-                  <Text style={styles.friendText2}> Distance: </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-
+            <Text style={styles.containerTitle}> Mutual Friends</Text>
             <View style={styles.friendsContainer}>
               <Image
                 source={require("../assets/images/Ben.jpg")}
@@ -237,4 +214,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null
-)(SocialScreen);
+)(ProfileScreen);

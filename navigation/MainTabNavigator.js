@@ -9,6 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 import StatsScreen from "../screens/StatsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import SocialScreen from "../screens/SocialScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import MapScreen from "../screens/MapScreen";
 
 /*
@@ -32,7 +33,8 @@ HomeStack.navigationOptions = {
 
 //Social Button
 const SocialStack = createStackNavigator({
-  Social: SocialScreen
+  Social: SocialScreen,
+  Profile: ProfileScreen
 });
 SocialStack.navigationOptions = {
   tabBarLabel: "Social",
