@@ -14,11 +14,15 @@ const UserMap = props => {
           latitudeDelta: 0.0422,
           longitudeDelta: 0.0221
         }}
+        showsCompass={true}
+        toolbarEnabled={true}
+        loadingEnabled={true}
       >
-      <MapView.Marker coordinate={markerLocation}
-        opacity= {0.7}
-        image={require("../assets/images/Bike.png")}
-      />
+        <MapView.Marker
+          coordinate={markerLocation}
+          opacity={0.7}
+          image={require("../assets/images/Bike.png")}
+        />
       </MapView>
     </View>
   );
@@ -27,7 +31,7 @@ const UserMap = props => {
 const markerLocation = {
   latitude: 45.4216,
   longitude: -75.6759
-}
+};
 
 const styles = StyleSheet.create({
   container: {
