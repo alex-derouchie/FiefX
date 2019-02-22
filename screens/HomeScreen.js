@@ -10,7 +10,8 @@ import {
 import NavigationOptions from "../components/MainNavigationOptions";
 import UserMap from "../components/UserMap";
 import UserChart from "../components/UserChart";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import MapView from "react-native-maps";
 
 /*
 This class represents the Home page of the app. It is mainly
@@ -35,7 +36,26 @@ class HomeScreen extends React.Component {
               onPress={() => this.props.navigation.navigate("Map")}
             >
               <Text style={styles.mapText}>Map</Text>
-              <UserMap />
+              <View style={styles.mapContainer}>
+                <MapView
+                  style={styles.map}
+                  initialRegion={{
+                    latitude: 45.4216,
+                    longitude: -75.6759,
+                    latitudeDelta: 0.0422,
+                    longitudeDelta: 0.0221
+                  }}
+                  showsCompass={true}
+                  toolbarEnabled={true}
+                  loadingEnabled={true}
+                >
+                  <MapView.Marker
+                    coordinate={markerLocation}
+                    opacity={0.7}
+                    image={require("../assets/images/Bike.png")}
+                  />
+                </MapView>
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -52,18 +72,24 @@ class HomeScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Social")}
             >
-              <View style = {styles.socialCard}>
+              <View style={styles.socialCard}>
                 <Image
                   source={require("../assets/images/RyRy.jpg")}
                   style={styles.profilePicture}
                 />
-                <View style = {styles.socialText}>
-                  <Text style = {styles.titleText2}> Rylan Deck</Text>
-                  <Text style = {styles.subText}>{'       Daily Distance: '} {this.props.profile.dailyDistances[5]} {'Km'}</Text>
-                  <Text style = {styles.subText}>{'       Weekly Distance: '} {this.props.profile.weeklyDistance} {'Km'}</Text>
+                <View style={styles.socialText}>
+                  <Text style={styles.titleText2}> Rylan Deck</Text>
+                  <Text style={styles.subText}>
+                    {"       Daily Distance: "}{" "}
+                    {this.props.profile.dailyDistances[5]} {"Km"}
+                  </Text>
+                  <Text style={styles.subText}>
+                    {"       Weekly Distance: "}{" "}
+                    {this.props.profile.weeklyDistance} {"Km"}
+                  </Text>
                 </View>
               </View>
-              <View style = {styles.friendsContainer}>
+              <View style={styles.friendsContainer}>
                 <Image
                   source={require("../assets/images/Alex.jpg")}
                   style={styles.friendPicture}
@@ -77,7 +103,7 @@ class HomeScreen extends React.Component {
                   style={styles.friendPicture}
                 />
               </View>
-              <View style = {styles.blankSpace}></View>
+              <View style={styles.blankSpace} />
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -85,6 +111,11 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
+const markerLocation = {
+  latitude: 45.4216,
+  longitude: -75.6759
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -118,6 +149,13 @@ const styles = StyleSheet.create({
   blankSpace: {
     paddingTop: 100
   },
+  mapContainer: {
+    ...StyleSheet.absoluteFillObject,
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
   map: {
     ...StyleSheet.absoluteFillObject
   },
@@ -146,8 +184,8 @@ const styles = StyleSheet.create({
     color: "#838383",
     paddingVertical: 4
   },
-  friendsContainer:{
-    flexDirection: 'row',
+  friendsContainer: {
+    flexDirection: "row",
     height: 50,
     paddingVertical: 20
   },
@@ -158,15 +196,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 1000,
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
-
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     profile: state.profile
-  }
+  };
 }
 
-export default connect(mapStateToProps, null)(HomeScreen);
+export default connect(
+  mapStateToProps,
+  null
+)(HomeScreen);
