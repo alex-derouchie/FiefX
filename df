@@ -1,0 +1,72 @@
+[33mcommit a8412675a4d3683925b6b29edb19e9ed76adee61[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Alex Derouchie <alex.derouchie@gmail.com>
+Date:   Fri Feb 22 18:21:56 2019 -0500
+
+    Implemented POI search and Navigation in the Maps module.
+
+[33mcommit cc017c1d8f10a8e579ea9dee33bf41db2c6bbf2c[m
+Author: Alex Derouchie <alex.derouchie@gmail.com>
+Date:   Fri Feb 1 10:43:20 2019 -0500
+
+    Made visual changes to UserChart and UserMap
+
+[33mcommit b811e0a00d0a0b45483fce2a2b8eb289647bc5f6[m
+Author: Alex Derouchie <alex.derouchie@gmail.com>
+Date:   Tue Jan 29 12:24:39 2019 -0500
+
+    Added ProfileScreen to display the basic information of a user's friends
+
+[33mcommit 158834567d8282e47284f41ba00b738079d4ac70[m
+Author: Alex <adero063@uottawa.ca>
+Date:   Sat Jan 19 16:26:51 2019 -0500
+
+    Updated use of redux across many components.
+
+[33mcommit 39f50a5d774074f0f0695b6f1404fad7da3f34fa[m
+Author: Alex <adero063@uottawa.ca>
+Date:   Tue Jan 15 16:08:25 2019 -0500
+
+            modified:   App.js
+            new file:   assets/images/poop.png
+            modified:   constants/Colors.js
+            modified:   index.js
+            modified:   package-lock.json
+            modified:   package.json
+            modified:   screens/HomeScreen.js
+            modified:   screens/LockScreen.js
+            modified:   screens/LoginScreen.js
+            modified:   screens/RecoveryScreen.js
+            modified:   screens/SettingsScreen.js
+            modified:   screens/SignupScreen.js
+            modified:   screens/SocialScreen.js
+            new file:   src/actions/colorActions.js
+            new file:   src/actions/index.js
+            new file:   src/reducers/colorReducer.js
+            new file:   src/reducers/index.js
+            new file:   src/reducers/profileReducer.js
+
+[33mcommit 388b8256bc33c50a73e0c663b46509b6413e112e[m
+Author: Alex <adero063@uottawa.ca>
+Date:   Tue Jan 8 13:10:15 2019 -0500
+
+            new file:   package-lock.json
+            modified:   package.json
+            modified:   screens/HomeScreen.js
+            modified:   screens/SocialScreen.js
+            modified:   screens/StatsScreen.js
+
+[33mcommit 0352b9fabc58b65940b5b23940ee76875dfe93ee[m
+Author: Alex <adero063@uottawa.ca>
+Date:   Mon Jan 7 15:40:52 2019 -0500
+
+        new file:   assets/images/Alex.jpg
+            new file:   assets/images/Ben.jpg
+            new file:   assets/images/Rick.jpg
+            modified:   screens/HomeScreen.js
+            modified:   screens/SocialScreen.js
+
+[33mcommit 46ff961f15610fe00045357cb636b3efc6721400[m
+Author: Alex <adero063@uottawa.ca>
+Date:   Thu Nov 22 12:16:37 2018 -0500
+
+    Initial Commit

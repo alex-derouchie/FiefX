@@ -6,7 +6,7 @@ import {
   Text,
   TouchableHighlight,
   Keyboard,
-  Marker
+  TouchableOpacity
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import MapView, { Polyline } from "react-native-maps";
@@ -15,6 +15,7 @@ import routeKey from "../constants/routes_api_key";
 import _ from "lodash";
 import PolyLine from "@mapbox/polyline";
 import Color from "../constants/Colors";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 /*
 This class represents the Map page of the app. It is mainly
@@ -32,11 +33,53 @@ export default class MapScreen extends React.Component {
         latitude: 45.4216,
         longitude: -75.6759
       },
+      region: {
+        latitude: 45.4216,
+        longitude: -75.6759,
+        latitudeDelta: 0.0422,
+        longitudeDelta: 0.0221
+      },
       destination: "",
       placeResults: [],
-      pointCoords: []
+      pointCoords: [
+        {
+          latitude: 45.4216,
+          longitude: -75.6759
+        }
+      ],
+      checkName: "",
+      cancelName: "",
+      destOpacity: 0
     };
     this.onChangeDestinationDB = _.debounce(this.onChangeDestination, 200);
+  }
+
+  confirm() {
+    this.setState({ destOpacity: 0, checkName: "", cancelName: "" });
+  }
+
+  cancel() {
+    this.setState({
+      destOpacity: 0,
+      checkName: "",
+      cancelName: "",
+      pointCoords: [
+        {
+          latitude: 45.4216,
+          longitude: -75.6759
+        }
+      ],
+      region: {
+        latitude: 45.4216,
+        longitude: -75.6759,
+        latitudeDelta: 0.0422,
+        longitudeDelta: 0.0221
+      }
+    });
+  }
+
+  onRegionChange(region) {
+    this.setState({ region: region });
   }
 
   async onChangeDestination(destination) {
@@ -83,12 +126,17 @@ export default class MapScreen extends React.Component {
     const predictions = this.state.placeResults.map(prediction => (
       <TouchableHighlight
         key={prediction.id}
-        onPress={() =>
+        onPress={() => {
           this.getRoute(
             prediction.place_id,
             prediction.structured_formatting.main_text
-          )
-        }
+          );
+          this.setState({
+            destOpacity: 100,
+            checkName: "check",
+            cancelName: "cancel"
+          });
+        }}
       >
         <View>
           <Text style={styles.resultsText}>{prediction.description}</Text>
@@ -103,12 +151,8 @@ export default class MapScreen extends React.Component {
             this.map = map;
           }}
           style={styles.map}
-          initialRegion={{
-            latitude: this.state.coords.latitude,
-            longitude: this.state.coords.longitude,
-            latitudeDelta: 0.0422,
-            longitudeDelta: 0.0221
-          }}
+          region={this.state.region}
+          onRegionChange={region => this.onRegionChange(region)}
           showsCompass={true}
           toolbarEnabled={true}
           loadingEnabled={true}
@@ -123,6 +167,12 @@ export default class MapScreen extends React.Component {
             opacity={0.7}
             image={require("../assets/images/Bike.png")}
           />
+          <MapView.Marker
+            coordinate={
+              this.state.pointCoords[this.state.pointCoords.length - 1]
+            }
+            opacity={this.state.destOpacity}
+          />
         </MapView>
         <TextInput
           style={styles.inputField}
@@ -133,6 +183,14 @@ export default class MapScreen extends React.Component {
             this.setState({ destination });
           }}
         />
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity onPress={() => this.confirm()}>
+            <Icon name={this.state.checkName} size={36} color={"#000"} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.cancel()}>
+            <Icon name={this.state.cancelName} size={36} color={"#000"} />
+          </TouchableOpacity>
+        </View>
         {predictions}
       </View>
     );
@@ -160,5 +218,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 0.5,
     marginHorizontal: 5
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 16,
+    right: 16
   }
 });

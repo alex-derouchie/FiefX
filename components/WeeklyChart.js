@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import { VictoryBar, VictoryChart } from "victory-native";
 
 //This data will be replaced with the User's data from the Firebase Server in the future.
 const data = [

@@ -5,11 +5,15 @@ import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 import RecoveryScreen from "../screens/RecoveryScreen";
 import LockScreen from "../screens/LockScreen";
+import PassResesScreen from "../screens/PassResetScreen";
+import UserInfoScreen from "../screens/UserInfoScreen";
 
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
   Signup: SignupScreen,
+  UserInfo: UserInfoScreen,
   Recovery: RecoveryScreen,
+  PassReset: PassResesScreen,
   Lock: LockScreen
 });
 

@@ -11,6 +11,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import SocialScreen from "../screens/SocialScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import MapScreen from "../screens/MapScreen";
+import LiveDataScreen from "../screens/LiveDataScreen";
 
 /*
 This file contains all the logic and styling of the bottom navigation bar,
@@ -45,7 +46,8 @@ SocialStack.navigationOptions = {
 
 //Analytics Button
 const StatsStack = createStackNavigator({
-  Stats: StatsScreen
+  Stats: StatsScreen,
+  LiveData: LiveDataScreen
 });
 StatsStack.navigationOptions = {
   tabBarLabel: "Analytics",

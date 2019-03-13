@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
+import firebase from "@firebase/database";
 
 /*
 This class represents the Login page of the app. It is the root of the 
@@ -29,6 +30,7 @@ export default class LoginScreen extends React.Component {
       userIn: "",
       passIn: ""
     };
+    console.ignoredYellowBox = ["Setting a timer"];
   }
 
   render() {

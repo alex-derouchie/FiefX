@@ -8,8 +8,7 @@ import {
   Image
 } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
-import UserMap from "../components/UserMap";
-import UserChart from "../components/UserChart";
+import WeeklyChart from "../components/WeeklyChart";
 import { connect } from "react-redux";
 import MapView from "react-native-maps";
 
@@ -64,7 +63,7 @@ class HomeScreen extends React.Component {
               onPress={() => this.props.navigation.navigate("Stats")}
             >
               <Text style={styles.titleText}>History</Text>
-              <UserChart />
+              <WeeklyChart />
             </TouchableOpacity>
           </View>
 

@@ -14,8 +14,8 @@ export default class RecoveryScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      answer: "",
-      question: "Sample Question"
+      pass: "",
+      passConfirm: ""
     };
   }
 
@@ -23,27 +23,37 @@ export default class RecoveryScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.blankSpace} />
-        <Text style={styles.bigText}>Password Recovery</Text>
+        <Text style={styles.bigText}>Password Reset</Text>
         <Text style={styles.blankSpace} />
-        <Text style={styles.smallText}>
-          Security Question: {this.state.question}
-        </Text>
         <TextInput
           style={styles.input}
           underlineColorAndroid="transparent"
-          placeholder=" Answer"
+          placeholder=" Password"
           placeholderTextColor="#FFFFFF"
           autoCapitalize="none"
-          value={this.state.answer}
+          secureTextEntry={true}
+          value={this.state.pass}
           onChangeText={text => {
-            this.setState({ answer: text });
+            this.setState({ pass: text });
+          }}
+        />
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder=" Confirm Password"
+          placeholderTextColor="#FFFFFF"
+          autoCapitalize="none"
+          secureTextEntry={true}
+          value={this.state.passConfirm}
+          onChangeText={text => {
+            this.setState({ passConfirm: text });
           }}
         />
         <View style={styles.buttonPadding}>
           <Button
-            title="Recover Account"
+            title="Reset Password"
             onPress={() => {
-              this.props.navigation.navigate("PassReset");
+              this.props.navigation.navigate("Login");
             }}
           />
         </View>
@@ -59,15 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.themeColor
   },
   blankSpace: {
-    paddingTop: 100
-  },
-  smallText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginHorizontal: 15,
-    marginBottom: 10,
-    color: "#FFFFFF"
+    paddingTop: 50
   },
   bigText: {
     fontSize: 40,
