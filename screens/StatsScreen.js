@@ -16,10 +16,7 @@ import { connect } from "react-redux";
 import FriendChart from "../components/FriendChart";
 
 /*
-This class represents the Analytics/Statistics page of the app. Currently,
-there are a lot of placeholders, but there is a basic Victory-native component
-currently displayed, to show what the data being displayed will look like in
-the future.
+This class represents the Analytics/Statistics page of the app.
 */
 class StatsScreen extends React.Component {
   static navigationOptions = NavigationOptions.navigationOptions;
@@ -148,6 +145,8 @@ const styles = StyleSheet.create({
   },
   button: { padding: 35 }
 });
+
+//Redux Functions
 
 function mapStateToProps(state) {
   return {

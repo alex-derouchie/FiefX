@@ -2,17 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { VictoryBar, VictoryChart } from "victory-native";
 
-//This data will be replaced with the User's data from the Firebase Server in the future.
-const data = [
-  { day: "Mon", distance: 13000 },
-  { day: "Tues", distance: 16500 },
-  { day: "Wed", distance: 14250 },
-  { day: "Thu", distance: 3500 },
-  { day: "Fri", distance: 5600 },
-  { day: "Sat", distance: 10500 },
-  { day: "Sun", distance: 13500 }
-];
-
 //This component is responsible for rendering the User's distance travelled per day in graph format.
 export default class App extends React.Component {
   render() {
@@ -43,3 +32,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5fcff"
   }
 });
+
+//This data will be replaced with the User's data from the Firebase Server in the future.
+const data = [
+  { day: "Mon", distance: 13000 },
+  { day: "Tues", distance: 16500 },
+  { day: "Wed", distance: 14250 },
+  { day: "Thu", distance: 3500 },
+  { day: "Fri", distance: 5600 },
+  { day: "Sat", distance: 10500 },
+  { day: "Sun", distance: 13500 }
+];

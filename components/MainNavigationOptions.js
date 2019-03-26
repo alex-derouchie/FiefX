@@ -2,6 +2,11 @@ import React from "react";
 import { Image, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import TabBarIcon from "../components/TabBarIcon";
 
+/*****************************************************************************************
+ * This component is similar to AuthNavigationOptions in that it formats the top bar of the
+ * application, the main difference being the presence of a Lock button which put the device
+ * into secure mode.
+ *****************************************************************************************/
 export default class NavigationOptions extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     header: (

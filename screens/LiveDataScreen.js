@@ -11,11 +11,15 @@ import NavigationOptions from "../components/MainNavigationOptions";
 import { connect } from "react-redux";
 import UserMap from "../components/UserMap";
 
+//This will be updated to Redux global User Position
 const markerLocation = {
   latitude: 45.4216,
   longitude: -75.6759
 };
 
+//This Screen Component is responsible for displaying the most relevant data from
+//the embedded system in real time. Also provides a link to the main Map component.
+//Retrieves all data from the Redux state.
 class LiveDataScreen extends React.Component {
   static navigationOptions = NavigationOptions.navigationOptions;
 
@@ -87,6 +91,7 @@ class LiveDataScreen extends React.Component {
   }
 }
 
+//Styling and Formatting
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -128,6 +133,8 @@ const styles = StyleSheet.create({
     padding: 120
   }
 });
+
+//Redux Functions
 
 function mapStateToProps(state) {
   return {

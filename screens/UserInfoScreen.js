@@ -14,16 +14,11 @@ import firebase from "@firebase/app";
 import "@firebase/database";
 
 /*
-This class represents the Signup page of the app. It asks the user to provide
-all the authentication information as well as password recovery options that will
-be needed to initialize a user account.
+This React Component asks for further data from the user upon initial signup.
 */
 export default class SignupScreen extends React.Component {
   static navigationOptions = AuthNavigationOptions.navigationOptions;
 
-  //We need a constructor to be able to dynmically tie the value the user chose in the
-  //Picker with the answer provided to the selected question. To be displayed in the
-  //recovery screen.
   constructor(props) {
     super(props);
     this.state = {

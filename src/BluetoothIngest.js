@@ -38,6 +38,7 @@ const strings = [
 
 var count = 0;
 
+//main function responsible for ingesting bluetooth data and dispatching actions to update the global Redux State with the new data.
 export function updateBluetooth() {
   var btString = strings[count];
   if (btString.substring(1, 3) == "GP") {

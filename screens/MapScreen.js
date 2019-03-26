@@ -19,13 +19,15 @@ import Color from "../constants/Colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 /*
-This class represents the Map page of the app. It is mainly
-a shell that renders the UserMap component which is where the MapView
-component is initialized.
+This class represents the Map page of the app. Along with rendering the map itself,
+this component includes functions which trigger API calls to Google's Places and Routes
+APIs. This allows the user to search for Points of Interest and be navigated to them by
+the application.
 */
 export default class MapScreen extends React.Component {
   static navigationOptions = AuthNavigationOptions.navigationOptions;
 
+  //Creates a local state object which stores various Map, Places, and Routes values.
   constructor(props) {
     super(props);
     this.state = {
@@ -55,10 +57,12 @@ export default class MapScreen extends React.Component {
     this.onChangeDestinationDB = _.debounce(this.onChangeDestination, 200);
   }
 
+  //This hides the destination marker and the confirm/cancel buttons
   confirm() {
     this.setState({ destOpacity: 0, checkName: null, cancelName: null });
   }
 
+  //Resets the zoom level and button states of the Map upon pressing the Cancel button
   cancel() {
     this.setState({
       destOpacity: 0,
@@ -79,10 +83,12 @@ export default class MapScreen extends React.Component {
     });
   }
 
+  //Updates the region object of the local state to reflect the state of the Map.
   onRegionChange(region) {
     this.setState({ region: region });
   }
 
+  //This function is responsible for making the Places API call and storing the place predictions in the local State.
   async onChangeDestination(destination) {
     this.setState({ destination });
     const apiCall = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${placeKey}&input=${destination}&location=${
@@ -99,6 +105,8 @@ export default class MapScreen extends React.Component {
     }
   }
 
+  //This function calls the Routes API to get a Polyline object representing the Route from the users'
+  //current location to the place selected by the user.
   async getRoute(placeID, newDest) {
     try {
       const routeResult = await fetch(
@@ -124,6 +132,8 @@ export default class MapScreen extends React.Component {
   }
 
   render() {
+    //this const displays all the results of the Places API call
+    //as a list where the user can select the desired location
     const predictions = this.state.placeResults.map(prediction => (
       <TouchableHighlight
         key={prediction.id}
@@ -204,6 +214,7 @@ export default class MapScreen extends React.Component {
   }
 }
 
+//Styling and formatting
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject

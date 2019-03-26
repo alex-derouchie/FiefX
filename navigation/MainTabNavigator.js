@@ -18,8 +18,8 @@ This file contains all the logic and styling of the bottom navigation bar,
 which is the main navigation component of the app. It also initializes and
 exports all the screens that correspond to the tab buttons on the bottom and
 the child screens of those components.
-
 */
+
 //Home Button
 const HomeStack = createStackNavigator({
   Home: HomeScreen,

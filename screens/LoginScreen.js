@@ -10,42 +10,71 @@ import {
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
-import firebase from "@firebase/database";
+import { signInWithParams } from "../src/DatabaseFunctions";
+import { connect } from "react-redux";
 
 /*
 This class represents the Login page of the app. It is the root of the 
 Authentication stack navigator and the root of the AppNavigator. The 
 application opens into this screen.
 */
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
   //This Object represents the top bar across the app and
   //handles the components and styling contained within the bar.
   static navigationOptions = AuthNavigationOptions.navigationOptions;
 
+  //Create a local (non-redux) state which keeps track of the input fields
   constructor(props) {
     super(props);
     this.state = {
-      username: "alex1167",
-      password: "password",
-      userIn: "",
-      passIn: ""
+      email: "",
+      password: ""
     };
-    console.ignoredYellowBox = ["Setting a timer"];
+  }
+
+  // The signIn function handles the Firebase Authentication of the application. It calls
+  // the database function responsible for signing in the user, after ensuring the fields
+  // have valid data in them, then pauses long enough for Google to respond to the function
+  // call, at which point it either navigates to the HomeScreen or denies access to the app.
+  signIn() {
+    console.log("Test1");
+    if (this.state.password == "" || this.state.email == "") {
+      Alert.alert("Error", "There are empty fields", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    } else if (!this.state.email.includes("@")) {
+      Alert.alert("Error", "Email invalid", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    } else if (this.state.password.length < 8) {
+      Alert.alert("Error", "Password is too short", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    } else {
+      signInWithParams(this.state.email, this.state.password);
+      setTimeout(() => {
+        console.log("Test2");
+        if (this.props.profile.signedIn) {
+          this.props.navigation.navigate("Home");
+        } else {
+          Alert.alert(
+            "Error",
+            "Sign In failed: check your credentials",
+            [{ text: "Okay" }],
+            {
+              cancelable: false
+            }
+          );
+        }
+      }, 3000);
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.blankSpace} />
-        <View>
-          {/*Currently, this screen has a login bypass where you can just press the
-             Login text to get into the app. Will be removed after development. */}
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Home")}
-          >
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.loginText}>Login</Text>
 
         <TextInput
           style={styles.input}
@@ -53,7 +82,7 @@ export default class LoginScreen extends React.Component {
           placeholder=" Email or Username"
           placeholderTextColor="#FFFFFF"
           autoCapitalize="none"
-          onChangeText={text => this.setState({ userIn: text })}
+          onChangeText={text => this.setState({ email: text })}
         />
 
         <TextInput
@@ -63,23 +92,15 @@ export default class LoginScreen extends React.Component {
           placeholderTextColor="#FFFFFF"
           autoCapitalize="none"
           secureTextEntry={true}
-          onChangeText={text => this.setState({ passIn: text })}
+          onChangeText={text => this.setState({ password: text })}
         />
 
         <View style={styles.buttonView}>
           <Button
             title="Login"
-            onPress={() =>
-              this.state.passIn == this.state.password &&
-              this.state.userIn == this.state.username
-                ? this.props.navigation.navigate("Home")
-                : Alert.alert(
-                    "Incorrect user ID or password.",
-                    "Type the correct user ID and password, and try again.",
-                    [{ text: "Okay" }],
-                    { cancelable: false }
-                  )
-            }
+            onPress={() => {
+              this.signIn();
+            }}
           />
         </View>
 
@@ -103,6 +124,7 @@ export default class LoginScreen extends React.Component {
   }
 }
 
+//Styling and formatting
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -132,3 +154,15 @@ const styles = StyleSheet.create({
   },
   buttonView: { paddingHorizontal: 50, paddingVertical: 20 }
 });
+
+//Redux Functions
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(LoginScreen);

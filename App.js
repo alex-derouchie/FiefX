@@ -3,14 +3,16 @@ import { StyleSheet, View } from "react-native";
 import firebase from "@firebase/app";
 import "@firebase/database";
 import { updateBluetooth } from "./src/BluetoothIngest";
+import { connect } from "react-redux";
 
 import AppNavigator from "./navigation/AppNavigator";
 
 //Root component of the app. Calls AppNavigator to
 //initialize the react-navigation components responsible
-//for displaying the screens of the app.
+//for displaying the screens of the app. Also initializes the
+//Firebase object and updates Bluetooth data periodically.
 
-export default class YourApp extends Component {
+class YourApp extends Component {
   componentWillMount() {
     const config = {
       apiKey: "AIzaSyDHD8AFvTRKau3Ao2NE8Qv3nGRgj7OeXM8",
@@ -20,12 +22,14 @@ export default class YourApp extends Component {
       storageBucket: "testproj-7213b.appspot.com",
       messagingSenderId: "384434208146"
     };
-    //firebase.initializeApp(config);
+    firebase.initializeApp(config);
     console.log("Firestore Initialized");
 
-    // setInterval(() => {
-    //   updateBluetooth();
-    // }, 400);
+    setInterval(() => {
+      if (this.props.profile.signedIn) {
+        updateBluetooth();
+      }
+    }, 400);
   }
 
   render() {
@@ -43,3 +47,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   }
 });
+
+//Redux functions
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(YourApp);

@@ -12,6 +12,7 @@ import { VictoryPie } from "victory-native";
 import * as Progress from "react-native-progress";
 import Colors from "../constants/Colors";
 import { connect } from "react-redux";
+import { readUserInformation } from "../src/DatabaseFunctions";
 
 /*
 This class represents the Social page of the app. It displays primitive information about
@@ -42,7 +43,7 @@ class SocialScreen extends React.Component {
             />
           </View>
 
-          <Text style={styles.userName}>{this.props.profile.profileName}</Text>
+          <Text style={styles.userName}>{readUserInformation("Name").key}</Text>
           <View style={styles.contentContainer}>
             <VictoryPie
               innerRadius={90}
@@ -229,6 +230,8 @@ const styles = StyleSheet.create({
     flex: 2
   }
 });
+
+//Redux Functions
 
 function mapStateToProps(state) {
   return {

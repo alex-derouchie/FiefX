@@ -21,8 +21,6 @@ class ProfileScreen extends React.Component {
 
   static navigationOptions = NavigationOptions.navigationOptions;
 
-  //In the future, the majority of the data being displayed in the app will come from the
-  //database, but for now, mostly placeholders.0
   render() {
     return (
       <View style={styles.container}>
@@ -204,6 +202,8 @@ const styles = StyleSheet.create({
     flex: 2
   }
 });
+
+//Redux Functions
 
 function mapStateToProps(state) {
   return {

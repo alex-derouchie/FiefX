@@ -42,6 +42,7 @@ export default class LockScreen extends React.Component {
   }
 }
 
+//Styling and formatting
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -3,7 +3,9 @@ import "@firebase/auth";
 import "@firebase/database";
 import "@firebase/firestore";
 import "@firebase/util";
-import React from "react";
+
+import store from "./store";
+import * as actions from "./actions";
 
 //Database Module
 //Class Variables
@@ -83,7 +85,7 @@ function runTest() {
   signInWithParams(email1, password1);
 
   //Initialize the Collection Documents
-  initializeCollectionDocuments();
+  //initializeCollectionDocuments();
 
   //Add 2 Datapoint
   addCollectedData(accelerometerDocID, runID0, dataType0_0);
@@ -115,7 +117,7 @@ var active_uid;
 //Parameters:   email - the google email
 //              password - the email for the google email
 //Outputs:      none
-function signInWithParams(email, password) {
+export function signInWithParams(email, password) {
   console.log("Trying to Sign In");
   //Initialize the auth handler if it does not exist
   if (googleAuthHandler == null) {
@@ -135,6 +137,8 @@ function signInWithParams(email, password) {
       currentUser = result.user;
       active_uid = currentUser.uid;
 
+      store.dispatch(actions.updateSignIn(true));
+
       //Sign In Successful
       console.log("Sign in Worked");
       console.log(active_uid);
@@ -143,6 +147,9 @@ function signInWithParams(email, password) {
     .catch(function(error) {
       //Sign In Error
       console.log("Sign in error");
+
+      store.dispatch(actions.updateSignIn(false));
+
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
@@ -154,7 +161,7 @@ function signInWithParams(email, password) {
 //Parameters:   email - the google email
 //              password - the email for the google email
 //Outputs:      none
-function createNewAccount(email, password) {
+export function createNewAccount(email, password) {
   console.log("Trying to Sign In");
   //Initialize the auth handler if it does not exist
   if (googleAuthHandler == null) {
@@ -166,11 +173,11 @@ function createNewAccount(email, password) {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(function(result) {
-      //var token = result.credential().accessToken;
+      //Sign in the user
       currentUser = result.user;
       active_uid = currentUser.uid;
-
-      //console.log(token);
+      //Create the collection documents
+      initializeCollectionDocuments();
     })
     .catch(function(error) {
       var errorCode = error.code;
@@ -183,7 +190,7 @@ function createNewAccount(email, password) {
 //Sign Out
 //Parameters:   none
 //Outputs:      none
-function signOut() {
+export function signOut() {
   firebase
     .auth()
     .signOut()
@@ -191,6 +198,9 @@ function signOut() {
       //Reset the Auth Globals
       currentUser = null;
       active_uid = null;
+
+      store.dispatch(actions.updateSignIn(false));
+
       console.log("Signed Out");
       //Sign out successful
     })
@@ -211,7 +221,7 @@ function signOut() {
 //Parameters:   infoType - the type of information being stored, is the "key" in the key-value pair
 //              infoVal - the value of the information being stored, is the "value" in the key-value pair
 //Outputs:      none
-function addNewUserInformation(infoType, infoVal) {
+export function addNewUserInformation(infoType, infoVal) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -229,7 +239,7 @@ function addNewUserInformation(infoType, infoVal) {
 //Read document under the user information folder for the active user. Folder is identified by the information type (infoType)
 //Parameters:   infoType - the identifier for the retrieved document
 //Outputs:      none
-function readUserInformation(infoType) {
+export function readUserInformation(infoType) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -242,11 +252,12 @@ function readUserInformation(infoType) {
     );
   }
 }
+
 //Update some piece of user information for the active user, denoted by the key-value pair
 //Parameters:   infoType - The type of information stored, identifies the document and is used as the key value
 //              updateInfoVal - The value of the updated datapoint
 //Outputs:      none
-function updateUserInformation(infoType, updatedInfoVal) {
+export function updateUserInformation(infoType, updatedInfoVal) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -266,7 +277,7 @@ function updateUserInformation(infoType, updatedInfoVal) {
 //Initialize the documents where the different types of data will be stored
 //Parameters:   none
 //Outputs:      none
-function initializeCollectionDocuments() {
+export function initializeCollectionDocuments() {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -291,7 +302,7 @@ function initializeCollectionDocuments() {
 //Parameters:   timeEpoch - The time the data value was recorded - is used as the key value when storing the data
 //              dataValue - The value of the data being stored
 //Outputs:      none
-function addAccelerometerData(timeEpoch, dataValue) {
+export function addAccelerometerData(timeEpoch, dataValue) {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -310,7 +321,7 @@ function addAccelerometerData(timeEpoch, dataValue) {
 //Add some accelerometer data to the database for the signed in user - user account must be initialized before calling
 //Parameters:   none
 //Outputs:      A list of key value pairs representing the accelerometer data stored in the system
-function getAccelerometerData() {
+export function getAccelerometerData() {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -329,7 +340,7 @@ function getAccelerometerData() {
 //Parameters:   timeEpoch - The time the data value was recorded - is used as the key value when storing the data
 //              dataValue - The value of the data being stored
 //Outputs:      none
-function addGyroscopeData(timeEpoch, dataValue) {
+export function addGyroscopeData(timeEpoch, dataValue) {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -348,7 +359,7 @@ function addGyroscopeData(timeEpoch, dataValue) {
 //Add some gyroscope data to the database for the signed in user - user account must be initialized before calling
 //Parameters:   none
 //Outputs:      A list of key value pairs representing the gyroscope data stored in the system
-function getGyroscopeData() {
+export function getGyroscopeData() {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -367,7 +378,7 @@ function getGyroscopeData() {
 //Parameters:   timeEpoch - The time the data value was recorded - is used as the key value when storing the data
 //              dataValue - The value of the data being stored
 //Outputs:      none
-function addGPSData(timeEpoch, dataValue) {
+export function addGPSData(timeEpoch, dataValue) {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -386,7 +397,7 @@ function addGPSData(timeEpoch, dataValue) {
 //Add some GPS data to the database for the signed in user - user account must be initialized before calling
 //Parameters:   none
 //Outputs:      A list of key value pairs representing the GPS data stored in the system
-function getGPSData() {
+export function getGPSData() {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -405,7 +416,7 @@ function getGPSData() {
 //Parameters:   timeEpoch - The time the data value was recorded - is used as the key value when storing the data
 //              dataValue - The value of the data being stored
 //Outputs:      none
-function addTachometerData(timeEpoch, dataValue) {
+export function addTachometerData(timeEpoch, dataValue) {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -424,7 +435,7 @@ function addTachometerData(timeEpoch, dataValue) {
 //Add some tachometer data to the database for the signed in user - user account must be initialized before calling
 //Parameters:   none
 //Outputs:      A list of key value pairs representing the tachometer data stored in the system
-function getTachometerData() {
+export function getTachometerData() {
   //Make sure a user is signed in
   if (active_uid != null) {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
@@ -445,7 +456,7 @@ function getTachometerData() {
 //              runID - an enumerated value which idenifies which collection point exists - serves as the key in the key-value pair
 //              value - the value of the key-value pair
 //Outputs:      none
-function createNewDataDocument(dataType, runID, value) {
+export function createNewDataDocument(dataType, runID, value) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -466,7 +477,7 @@ function createNewDataDocument(dataType, runID, value) {
 //              runID - the key in the key-value pair
 //              value - the value in the key-value pair
 //Outputs:      none
-function addCollectedData(dataType, runID, updatedVal) {
+export function addCollectedData(dataType, runID, updatedVal) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -484,7 +495,7 @@ function addCollectedData(dataType, runID, updatedVal) {
 //Read collected data in the database from a document identified by the information type (infoType)
 //Parameters:   dataType - the identifier for the document you want to read from
 //Outputs:      none
-function readCollectedData(dataType) {
+export function readCollectedData(dataType) {
   if (active_uid == null) {
     console.log("No One Sign In");
   } else {
@@ -499,19 +510,13 @@ function readCollectedData(dataType) {
 }
 
 //Utility Methods
-function initializeFirebase() {
-  //   firebase.initializeApp({
-  //     apiKey: "AIzaSyAfeceUe1LsJ_TwoFlK_HTtphFlos9P2WI",
-  //     authDomain: "projecttest-ff4ef.firebaseapp.com",
-  //     databaseURL: "https://projecttest-ff4ef.firebaseio.com",
-  //     projectId: "projecttest-ff4ef",
-  //     storageBucket: "projecttest-ff4ef.appspot.com",
-  //     messagingSenderId: "345061129316"
-  //   });
+export function initializeFirebase() {
   databaseInstance = firebase.firestore();
   googleAuthHandler = firebase.auth;
 }
+
 //"Write to" database functions
+
 //Generic L1 document
 function writeDataToL1Document(collectionID_L1, documentID_L1, key, value) {
   //Make sure the database has been initialized

@@ -8,6 +8,7 @@ import LockScreen from "../screens/LockScreen";
 import PassResesScreen from "../screens/PassResetScreen";
 import UserInfoScreen from "../screens/UserInfoScreen";
 
+//Stack of Screen components which are used before the user is logged in to the application
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
   Signup: SignupScreen,
@@ -19,13 +20,14 @@ const AuthStack = createStackNavigator({
 
 //This is the parent component called by the app.js file. It is the root of the navigation tree, and is
 //thus responsible for creating the heirarchy of screens in the app. The order of screens is mainly for
-//memory and ease of understanding purposes as we can easily navigate from any one screen to another.
+//speed and ease of understanding purposes as we can easily navigate from any one screen to another.
 export default createSwitchNavigator(
   {
     Auth: AuthStack,
     Main: MainTabNavigator
   },
   {
+    //This ensures that the application loads into the LoginScreen upon startup.
     initialRouteName: "Auth"
   }
 );

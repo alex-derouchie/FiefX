@@ -1,6 +1,11 @@
 import React from "react";
 import { Image, View, StyleSheet } from "react-native";
 
+/******************************************************************************************
+ * This React component implements the top bar of the application which displays the logo. This
+ * component is used for the authorization stack of the AppNavigator. It excludes the lock icon
+ * present in the rest of the application.
+ *******************************************************************************************/
 export default class NavigationOptions extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     header: (

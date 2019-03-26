@@ -13,8 +13,8 @@ import { connect } from "react-redux";
 import MapView from "react-native-maps";
 
 /*
-This class represents the Home page of the app. It is mainly
-responsible for initiating the components of the page and applying styling to them.
+This is the React Component representing the HomeScreen of the application.
+All of the rendered components are expressed in JSX within the return function.
 */
 class HomeScreen extends React.Component {
   //This Object represents the top bar across the app and
@@ -116,6 +116,7 @@ const markerLocation = {
   longitude: -75.6759
 };
 
+//Styling and formatting
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -199,12 +200,15 @@ const styles = StyleSheet.create({
   }
 });
 
+//Redux function responsible for assigning the state in the root index.js to this.props
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile //access ProfileReducer from this.props.profile
   };
 }
 
+//Redux function which exports a version of HomeScreen with the State mapped to it (see mapStateToProps)
+//Second argument is null, indicating no actions are being done to reducers within the HomeScreen.
 export default connect(
   mapStateToProps,
   null

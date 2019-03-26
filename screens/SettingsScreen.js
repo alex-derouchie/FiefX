@@ -13,7 +13,11 @@ import Colors from "../constants/Colors";
 import { goalChange } from "../src/actions/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { signOut } from "../src/DatabaseFunctions";
 
+//This React Component represents the SettingsScreen of the application. it allows
+//the user to configure some basic parameters about the application and to manage
+//their account.
 class SettingsScreen extends React.Component {
   static navigationOptions = NavigationOptions.navigationOptions;
 
@@ -36,7 +40,10 @@ class SettingsScreen extends React.Component {
           <View style={styles.devButton}>
             <Button
               title="Logout"
-              onPress={() => this.props.navigation.navigate("Login")}
+              onPress={() => {
+                signOut();
+                this.props.navigation.navigate("Login");
+              }}
             />
           </View>
           <View style={styles.devButton}>
@@ -150,6 +157,8 @@ const styles = StyleSheet.create({
     marginBottom: 30
   }
 });
+
+//Redux Functions
 
 function mapStateToProps(state) {
   return {
