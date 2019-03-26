@@ -10,14 +10,21 @@ import {
 } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import Colors from "../constants/Colors";
+import { goalChange } from "../src/actions/index";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
   static navigationOptions = NavigationOptions.navigationOptions;
 
   constructor(props) {
     super(props);
     this.state = {
-      distanceGoal: 2
+      distanceGoal: 5,
+      titleTextColor: "",
+      headerTextColor: "",
+      textColor: "",
+      themeColor: ""
     };
   }
 
@@ -64,14 +71,15 @@ export default class SettingsScreen extends React.Component {
               }}
               mode="dropdown"
               selectedValue={this.state.distanceGoal}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ distanceGoal: itemValue })
-              }
+              onValueChange={(itemValue, itemIndex) => {
+                console.log("Updating Goal...");
+                this.setState({ distanceGoal: itemValue });
+              }}
             >
+              <Picker.Item label="5 Kilometers" value={5} />
               <Picker.Item label="2 Kilometers" value={2} />
               <Picker.Item label="3 Kilometers" value={3} />
               <Picker.Item label="4 Kilometers" value={4} />
-              <Picker.Item label="5 Kilometers" value={5} />
               <Picker.Item label="6 Kilometers" value={6} />
               <Picker.Item label="7 Kilometers" value={7} />
               <Picker.Item label="8 Kilometers" value={8} />
@@ -84,6 +92,12 @@ export default class SettingsScreen extends React.Component {
               <Picker.Item label="25 Kilometers" value={25} />
               <Picker.Item label="30 Kilometers" value={30} />
             </Picker>
+          </View>
+          <View style={styles.devButton}>
+            <Button
+              title="Update Goal"
+              onPress={() => this.props.goalChange(this.state.distanceGoal)}
+            />
           </View>
 
           <Text style={styles.blankSpace} />
@@ -112,7 +126,7 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   devButton: {
-    padding: 50,
+    padding: 35,
     color: "#00A0E0"
   },
   bigText: {
@@ -136,3 +150,18 @@ const styles = StyleSheet.create({
     marginBottom: 30
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    settings: state.settings
+  };
+}
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ goalChange: goalChange }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  matchDispatchToProps
+)(SettingsScreen);

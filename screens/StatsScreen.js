@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button
+  Button,
+  Alert
 } from "react-native";
 import NavigationOptions from "../components/MainNavigationOptions";
 import WeeklyChart from "../components/WeeklyChart";
@@ -37,13 +38,19 @@ class StatsScreen extends React.Component {
             <View style={styles.todayStyle}>
               <View style={styles.pieBox}>
                 <Progress.Pie
-                  progress={this.props.profile.dailyGoals[5]}
+                  progress={
+                    this.props.profile.dailyDistances[5] /
+                    this.props.settings.weeklyGoal
+                  }
                   color="#33FF11"
                   size={150}
                 />
               </View>
               <View style={styles.todayTextBox}>
-                <Text style={styles.todayText1}> Distance Goal: 5 Km</Text>
+                <Text style={styles.todayText1}>
+                  {" "}
+                  Distance Goal: {this.props.settings.weeklyGoal} Km
+                </Text>
                 <Text style={styles.todayText1}>
                   {" "}
                   Progress: {this.props.profile.dailyDistances[5]} Km
@@ -60,7 +67,19 @@ class StatsScreen extends React.Component {
               <Button
                 title="Live Data"
                 onPress={() => {
-                  this.props.navigation.navigate("LiveData");
+                  Alert.alert(
+                    "Are you sure?",
+                    "Viewing data in real time will significantly reduce the battery life of your device.",
+                    [
+                      { text: "Cancel" },
+                      {
+                        text: "View Live",
+                        onPress: () =>
+                          this.props.navigation.navigate("LiveData")
+                      }
+                    ],
+                    { cancelable: false }
+                  );
                 }}
               />
             </View>
@@ -132,7 +151,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    settings: state.settings
   };
 }
 

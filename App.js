@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import firebase from "@firebase/app";
 import "@firebase/database";
+import { updateBluetooth } from "./src/BluetoothIngest";
 
 import AppNavigator from "./navigation/AppNavigator";
 
 //Root component of the app. Calls AppNavigator to
 //initialize the react-navigation components responsible
 //for displaying the screens of the app.
+
 export default class YourApp extends Component {
   componentWillMount() {
     const config = {
@@ -18,7 +20,12 @@ export default class YourApp extends Component {
       storageBucket: "testproj-7213b.appspot.com",
       messagingSenderId: "384434208146"
     };
-    firebase.initializeApp(config);
+    //firebase.initializeApp(config);
+    console.log("Firestore Initialized");
+
+    // setInterval(() => {
+    //   updateBluetooth();
+    // }, 400);
   }
 
   render() {

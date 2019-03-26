@@ -66,7 +66,9 @@ class SocialScreen extends React.Component {
                   style={styles.friendPicture}
                 />
                 <View style={styles.friendTextBox}>
-                  <Text style={styles.friendText1}>Alex Derouchie</Text>
+                  <Text style={styles.friendText1}>
+                    {this.props.bluetooth.latitude}
+                  </Text>
                   <Text style={styles.friendText2}> Distance: </Text>
                 </View>
               </View>
@@ -230,7 +232,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    bluetooth: state.bluetooth
   };
 }
 

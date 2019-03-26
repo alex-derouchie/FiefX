@@ -6,7 +6,8 @@ import {
   Text,
   TouchableHighlight,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import MapView, { Polyline } from "react-native-maps";
@@ -47,22 +48,22 @@ export default class MapScreen extends React.Component {
           longitude: -75.6759
         }
       ],
-      checkName: "",
-      cancelName: "",
+      checkName: null,
+      cancelName: null,
       destOpacity: 0
     };
     this.onChangeDestinationDB = _.debounce(this.onChangeDestination, 200);
   }
 
   confirm() {
-    this.setState({ destOpacity: 0, checkName: "", cancelName: "" });
+    this.setState({ destOpacity: 0, checkName: null, cancelName: null });
   }
 
   cancel() {
     this.setState({
       destOpacity: 0,
-      checkName: "",
-      cancelName: "",
+      checkName: null,
+      cancelName: null,
       pointCoords: [
         {
           latitude: 45.4216,
@@ -183,6 +184,12 @@ export default class MapScreen extends React.Component {
             this.setState({ destination });
           }}
         />
+        <View style={styles.button}>
+          <Button
+            title="Live Data"
+            onPress={() => this.props.navigation.navigate("LiveData")}
+          />
+        </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity onPress={() => this.confirm()}>
             <Icon name={this.state.checkName} size={36} color={"#000"} />
@@ -223,5 +230,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 16,
     right: 16
+  },
+  button: {
+    paddingTop: 470,
+    paddingHorizontal: 75
   }
 });

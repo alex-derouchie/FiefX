@@ -1,9 +1,11 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from "redux";
 
-import ColorReducer from './colorReducer.js';
-import ProfileReducer from './profileReducer.js';
+import ProfileReducer from "./profileReducer.js";
+import settingsReducer from "./settingsReducer.js";
+import bluetoothReducer from "./bluetoothReducer.js";
 
 export default combineReducers({
-    color: ColorReducer,
-    profile: ProfileReducer
+  profile: ProfileReducer,
+  bluetooth: bluetoothReducer,
+  settings: settingsReducer
 });

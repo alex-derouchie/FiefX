@@ -14,6 +14,7 @@ import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
 import firebase from "@firebase/app";
 import "@firebase/database";
+import "@firebase/firestore";
 
 /*
 This class represents the Signup page of the app. It asks the user to provide
@@ -75,7 +76,61 @@ export default class SignupScreen extends React.Component {
           //success callback
           console.log("data ", data);
           this.props.navigation.navigate("UserInfo");
-          this.state.nextUID++;
+        })
+        .catch(error => {
+          //error callback
+          console.log("error ", error);
+        });
+    }
+  }
+
+  firestoreTest(
+    collectionName,
+    docID,
+    email,
+    name,
+    password,
+    passConfirm,
+    question,
+    answer
+  ) {
+    if (password != passConfirm) {
+      Alert.alert(
+        "Invalid Input",
+        "Make sure your passwords match.",
+        [{ text: "Okay" }],
+        { cancelable: false }
+      );
+    } else if (
+      email == "" ||
+      name == "" ||
+      password == "" ||
+      passConfirm == "" ||
+      question == "" ||
+      answer == ""
+    ) {
+      Alert.alert(
+        "Invalid Input",
+        "Make sure all fields are filled in",
+        [{ text: "Okay" }],
+        { cancelable: false }
+      );
+    } else {
+      firebase
+        .firestore()
+        .collection(collectionName)
+        .doc(docID)
+        .set({
+          email: email,
+          name: name,
+          password: password,
+          question: question,
+          answer: answer
+        })
+        .then(data => {
+          //success callback
+          console.log("data ", data);
+          this.props.navigation.navigate("UserInfo");
         })
         .catch(error => {
           //error callback
@@ -200,6 +255,25 @@ export default class SignupScreen extends React.Component {
               //   this.state.question,
               //   this.state.answer
               // );
+            }}
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button
+            title="Firestore Test"
+            onPress={() => {
+              console.log("Pressed");
+              this.firestoreTest(
+                "Users",
+                "User1",
+                this.state.email,
+                this.state.name,
+                this.state.password,
+                this.state.passConfirm,
+                this.state.question,
+                this.state.answer
+              );
             }}
           />
         </View>
