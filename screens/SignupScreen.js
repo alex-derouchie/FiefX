@@ -55,6 +55,10 @@ export default class SignupScreen extends React.Component {
       Alert.alert("Error", "Passwords don't match", [{ text: "Okay" }], {
         cancelable: false
       });
+    } else if (this.state.question == "") {
+      Alert.alert("Error", "Choose a Security Question", [{ text: "Okay" }], {
+        cancelable: false
+      });
     } else {
       createNewAccount(this.state.email, this.state.password);
       this.props.navigation.navigate("UserInfo");
@@ -62,6 +66,9 @@ export default class SignupScreen extends React.Component {
         addNewUserInformation("Name", this.state.name);
         addNewUserInformation("Security Question", this.state.question);
         addNewUserInformation("SecurityQAnswer", this.state.answer);
+        addNewUserInformation("WeeklyDistance", 0);
+        addNewUserInformation("DailyDistance", 0);
+        addNewUserInformation("WeeklyGoal", 5);
       }, 8000);
     }
   }
@@ -93,7 +100,7 @@ export default class SignupScreen extends React.Component {
         <TextInput
           style={styles.input}
           underlineColorAndroid="transparent"
-          placeholder=" Name"
+          placeholder=" Full Name"
           placeholderTextColor="#FFFFFF"
           autoCapitalize="none"
           value={this.state.name}
@@ -141,10 +148,7 @@ export default class SignupScreen extends React.Component {
             this.setState({ question: itemValue })
           }
         >
-          <Picker.Item
-            label="Choose a Security Question"
-            value="Choose a Security Question"
-          />
+          <Picker.Item label="Choose a Security Question" value="" />
           <Picker.Item
             label="Mothers Maiden Name"
             value="Mothers maiden name"
@@ -153,6 +157,23 @@ export default class SignupScreen extends React.Component {
             label="Childhood Best Friend"
             value="childhood best friend"
           />
+          <Picker.Item
+            label="Primary School Name"
+            value="Primary School Name"
+          />
+          <Picker.Item
+            label="Middle Name of Your Oldest Child"
+            value="Middle Name of Your Oldest Child"
+          />
+          <Picker.Item
+            label="Last 5 Digits of Your Drivers License Number"
+            value="Last 5 Digits of Your Drivers License Number"
+          />
+          <Picker.Item
+            label="Hospital/place You Were Born In"
+            value="Hospital/place You Were Born In"
+          />
+          <Picker.Item label="Dream Vacation" value="Dream Vacation" />
         </Picker>
 
         <TextInput

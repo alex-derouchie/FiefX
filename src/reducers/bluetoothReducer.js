@@ -2,8 +2,8 @@ const initialState = {
   speed: 0,
   tachometer: 0,
   coords: {
-    latitude: 56,
-    longitude: 78
+    latitude: 45.4206,
+    longitude: -75.6789
   },
   accelerometer: {
     accelX: 0,
@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
         speed: action.payload
       });
     case "UPDATE_COORDS":
+      console.log("Updating Coords...");
       return Object.assign({}, state, {
         coords: action.payload
       });

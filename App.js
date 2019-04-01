@@ -26,10 +26,10 @@ class YourApp extends Component {
     console.log("Firestore Initialized");
 
     setInterval(() => {
-      if (this.props.profile.signedIn) {
+      if (this.props.profile.collectingData) {
         updateBluetooth();
       }
-    }, 400);
+    }, 250);
   }
 
   render() {

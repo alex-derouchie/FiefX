@@ -176,6 +176,9 @@ export function createNewAccount(email, password) {
       //Sign in the user
       currentUser = result.user;
       active_uid = currentUser.uid;
+
+      store.dispatch(actions.updateSignIn(true));
+
       //Create the collection documents
       initializeCollectionDocuments();
     })
@@ -244,12 +247,16 @@ export function readUserInformation(infoType) {
     console.log("No One Sign In");
   } else {
     //Add the user information into the L2 document under the user information collection - the document will be titled using the UID of the current user
-    return readFromL2Document(
+    var readVal = readFromL2Document(
       userStorageCollectionID,
       active_uid,
       userInfoCollectionID,
       infoType
     );
+    setTimeout(() => {
+      console.log("ReadVal: ", readVal);
+      return readVal;
+    }, 1500);
   }
 }
 
@@ -647,6 +654,10 @@ function readFromL2Document(
         //The document exists
         //Do something with the data
         console.log("Document Data: ", doc.data());
+
+        //store.dispatch(actions.updateReturn(doc.data()));
+        updateRedux(documentID_L2, doc.data());
+
         return doc.data();
       } else {
         //The document does not exist
@@ -654,6 +665,32 @@ function readFromL2Document(
       }
     });
 }
+
+function updateRedux(infoType, infoVal) {
+  if (infoType == "Name") {
+    console.log("Name");
+    store.dispatch(actions.updateName(infoVal.key));
+  } else if (infoType == "Age") {
+    store.dispatch(actions.updateAge(infoVal.key));
+  } else if (infoType == "City") {
+    store.dispatch(actions.updateCity(infoVal.key));
+  } else if (infoType == "DailyDistance") {
+    store.dispatch(actions.updateDDistance(infoVal.key));
+  } else if (infoType == "WeeklyGoal") {
+    store.dispatch(actions.goalChange(infoVal.key));
+  } else if (infoType == "Security Question") {
+    store.dispatch(actions.updateSQ(infoVal.key));
+  } else if (infoType == "SecurityQAnswer") {
+    store.dispatch(actions.updateSA(infoVal.key));
+  } else if (infoType == "TireSize") {
+    store.dispatch(actions.updateTire(infoVal.key));
+  } else if (infoType == "WeeklyDistance") {
+    store.dispatch(actions.updateWDistance(infoVal.key));
+  } else if (infoType == "bodyWeight") {
+    store.dispatch(actions.updateWeight(infoVal.key));
+  }
+}
+
 //Generic L3 Document
 function readFromL3Document(
   collectionID_L1,

@@ -24,11 +24,20 @@ class SocialScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Rylan Deck"
+      name: {},
+      profilePic: "../assets/images/profilePic.png"
     };
   }
 
   static navigationOptions = NavigationOptions.navigationOptions;
+
+  componentWillMount() {
+    readUserInformation("Name");
+    console.log("log");
+    setTimeout(() => {
+      this.setState({ name: this.props.profile.returnedData });
+    }, 500);
+  }
 
   //In the future, the majority of the data being displayed in the app will come from the
   //database, but for now, mostly placeholders.0
@@ -38,12 +47,18 @@ class SocialScreen extends React.Component {
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
             <Image
-              source={require("../assets/images/RyRy.jpg")}
+              source={require("../assets/images/profilePic.png")}
               style={styles.profilePicture}
             />
           </View>
 
-          <Text style={styles.userName}>{readUserInformation("Name").key}</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Profile")}
+          >
+            <Text style={styles.userName}>
+              {this.props.profile.profileName}
+            </Text>
+          </TouchableOpacity>
           <View style={styles.contentContainer}>
             <VictoryPie
               innerRadius={90}
@@ -67,9 +82,7 @@ class SocialScreen extends React.Component {
                   style={styles.friendPicture}
                 />
                 <View style={styles.friendTextBox}>
-                  <Text style={styles.friendText1}>
-                    {this.props.bluetooth.latitude}
-                  </Text>
+                  <Text style={styles.friendText1}>Alex Derouchie</Text>
                   <Text style={styles.friendText2}> Distance: </Text>
                 </View>
               </View>

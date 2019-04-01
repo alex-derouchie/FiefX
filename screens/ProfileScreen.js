@@ -31,83 +31,52 @@ class ProfileScreen extends React.Component {
               style={styles.profilePicture}
             />
           </View>
-
           <Text style={styles.userName}>{this.props.profile.profileName}</Text>
-          <View style={styles.contentContainer}>
-            <VictoryPie
-              innerRadius={90}
-              radius={105}
-              colorScale={[Colors.themeColor, "#B0B0B0", "blue"]}
-              data={[
-                { x: 1, y: 2, label: "Monday" },
-                { x: 2, y: 3, label: "Tuesday" },
-                { x: 3, y: 5, label: "Wednesday" }
-              ]}
-            />
-          </View>
-          <View style={styles.contentContainer}>
-            <Text style={styles.containerTitle}> Mutual Friends</Text>
-            <View style={styles.friendsContainer}>
-              <Image
-                source={require("../assets/images/Ben.jpg")}
-                style={styles.friendPicture}
-              />
-              <View style={styles.friendTextBox}>
-                <Text style={styles.friendText1}>Ben Kluge</Text>
-                <Text style={styles.friendText2}> Distance: </Text>
-              </View>
+          <View style={styles.topContentContainer}>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {"Age: "}
+                {this.props.firebase.age}
+              </Text>
             </View>
-            <View style={styles.friendsContainer}>
-              <Image
-                source={require("../assets/images/Rick.jpg")}
-                style={styles.friendPicture}
-              />
-              <View style={styles.friendTextBox}>
-                <Text style={styles.friendText1}>Rick Astley</Text>
-                <Text style={styles.friendText2}> Distance: </Text>
-              </View>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {"Tire Size: "}
+                {this.props.firebase.tireSize}
+              </Text>
             </View>
           </View>
-          <View style={styles.contentContainer}>
-            <Text style={styles.containerTitle}>Milestones/Achievements</Text>
-            <View style={styles.achievementBox}>
-              <Text style={styles.achievementText}>
-                {" "}
-                Travel 10000 Kilometers
+          <View style={styles.topContentContainer}>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {"City: "}
+                {this.props.firebase.city}
               </Text>
-              <Progress.Bar
-                progress={this.props.profile.achievements[0]}
-                color={Colors.themeColor}
-              />
             </View>
-            <View style={styles.achievementBox}>
-              <Text style={styles.achievementText}>
-                {" "}
-                Travel 10 Kilometers in one day
+          </View>
+          <View style={styles.topContentContainer}>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {"  "}
+                Distance (Today): {this.props.firebase.dailyDistance}
               </Text>
-              <Progress.Bar
-                progress={this.props.profile.achievements[1]}
-                color={Colors.themeColor}
-              />
             </View>
-            <View style={styles.achievementBox}>
-              <Text style={styles.achievementText}> Travel for one hour</Text>
-              <Progress.Bar
-                progress={this.props.profile.achievements[2]}
-                color={Colors.themeColor}
-              />
-            </View>
-            <View style={styles.achievementBox}>
-              <Text style={styles.achievementText}>
-                {" "}
-                Travel in a different city
+          </View>
+          <View style={styles.topContentContainer}>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {"  "}
+                Distance (This Week): {this.props.firebase.weeklyDistance}
               </Text>
-              <Progress.Bar
-                progress={this.props.profile.achievements[3]}
-                color="#00FF88"
-              />
             </View>
-            <View style={styles.blankSpace} />
+          </View>
+          <View style={styles.topContentContainer}>
+            <View style={styles.container}>
+              <Text style={styles.text}>
+                {" "}
+                Distance Goal: {this.props.settings.weeklyGoal}
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -118,17 +87,17 @@ class ProfileScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0,
-    backgroundColor: "#FAFAFA"
+    backgroundColor: "#fff"
+  },
+  topContentContainer: {
+    paddingTop: 10,
+    borderTopWidth: 0,
+    flexDirection: "row"
   },
   imageContainer: {
     alignItems: "center",
     marginTop: 10,
     marginBottom: 20
-  },
-  contentContainer: {
-    borderTopColor: "#B0B0B0",
-    borderTopWidth: StyleSheet.hairlineWidth
   },
   profilePicture: {
     width: 125,
@@ -140,66 +109,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  friendPicture: {
-    width: 80,
-    height: 80,
-    resizeMode: "contain",
-    borderRadius: 2000,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 25,
-    flex: 1
-  },
   userName: {
     textAlign: "center",
     color: Colors.themeColor,
     fontSize: 28,
     marginBottom: 20
   },
-  containerTitle: {
-    textAlign: "center",
-    color: "#a1a1a1",
-    fontSize: 22,
-    paddingVertical: 5
-  },
-  friendText1: {
-    textAlign: "left",
-    color: "#a1a1a1",
-    fontSize: 18
-  },
-  friendText2: {
-    textAlign: "left",
-    color: "#a1a1a1",
-    fontSize: 14
-  },
-  achievementText: {
-    textAlign: "left",
-    color: "#a1a1a1",
-    fontSize: 18,
-    paddingBottom: 10,
-    paddingTop: 17
-  },
-  achievementBox: {
-    padding: 10
-  },
-  blankSpace: {
-    paddingTop: 200
-  },
-  smallText: {
-    textAlign: "center",
-    fontSize: 18,
-    marginTop: 12,
-    marginBottom: 12
-  },
-  friendsContainer: {
-    flexDirection: "row",
-    padding: 10
-  },
-  friendTextBox: {
-    flexDirection: "column",
-    paddingHorizontal: 20,
-    flex: 2
+  text: {
+    fontSize: 28,
+    color: "#535353",
+    textAlign: "center"
   }
 });
 
@@ -207,7 +126,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    firebase: state.firebase,
+    settings: state.settings
   };
 }
 

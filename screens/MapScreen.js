@@ -17,6 +17,9 @@ import _ from "lodash";
 import PolyLine from "@mapbox/polyline";
 import Color from "../constants/Colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { collectData } from "../src/actions/index";
 
 /*
 This class represents the Map page of the app. Along with rendering the map itself,
@@ -24,7 +27,7 @@ this component includes functions which trigger API calls to Google's Places and
 APIs. This allows the user to search for Points of Interest and be navigated to them by
 the application.
 */
-export default class MapScreen extends React.Component {
+class MapScreen extends React.Component {
   static navigationOptions = AuthNavigationOptions.navigationOptions;
 
   //Creates a local state object which stores various Map, Places, and Routes values.
@@ -33,12 +36,12 @@ export default class MapScreen extends React.Component {
     this.state = {
       error: "",
       coords: {
-        latitude: 45.4216,
-        longitude: -75.6759
+        latitude: this.props.bluetooth.coords.latitude,
+        longitude: this.props.bluetooth.coords.longitude
       },
       region: {
-        latitude: 45.4216,
-        longitude: -75.6759,
+        latitude: this.props.bluetooth.coords.latitude,
+        longitude: this.props.bluetooth.coords.longitude,
         latitudeDelta: 0.0422,
         longitudeDelta: 0.0221
       },
@@ -46,54 +49,69 @@ export default class MapScreen extends React.Component {
       placeResults: [],
       pointCoords: [
         {
-          latitude: 45.4216,
-          longitude: -75.6759
+          latitude: this.props.bluetooth.coords.latitude,
+          longitude: this.props.bluetooth.coords.longitude
         }
       ],
       checkName: null,
       cancelName: null,
-      destOpacity: 0
+      destOpacity: 0,
+      isNavigating: false,
+      firstNav: true,
+      placeID: "",
+      mainText: ""
     };
     this.onChangeDestinationDB = _.debounce(this.onChangeDestination, 200);
   }
 
+  componentDidMount() {
+    setInterval(() => {
+      if (this.props.profile.collectingData) {
+        console.log("Executing");
+        // this.setState({
+        //   pointCoords: [
+        //     {
+        //       latitude: this.props.bluetooth.coords.latitude,
+        //       longitude: this.props.bluetooth.coords.longitude
+        //     }
+        //   ]
+        // });
+        this.getRoute(this.state.placeID, this.state.mainText);
+      }
+    }, 750);
+  }
+
   //This hides the destination marker and the confirm/cancel buttons
   confirm() {
-    this.setState({ destOpacity: 0, checkName: null, cancelName: null });
+    this.props.collectData(true);
+    this.setState({ destOpacity: 0, checkName: null, isNavigating: true });
   }
 
   //Resets the zoom level and button states of the Map upon pressing the Cancel button
   cancel() {
+    this.props.collectData(false);
     this.setState({
       destOpacity: 0,
       checkName: null,
       cancelName: null,
       pointCoords: [
         {
-          latitude: 45.4216,
-          longitude: -75.6759
+          latitude: this.props.bluetooth.coords.latitude,
+          longitude: this.props.bluetooth.coords.longitude
         }
       ],
-      region: {
-        latitude: 45.4216,
-        longitude: -75.6759,
-        latitudeDelta: 0.0422,
-        longitudeDelta: 0.0221
-      }
+      isNavigating: false,
+      firstNav: true
     });
-  }
-
-  //Updates the region object of the local state to reflect the state of the Map.
-  onRegionChange(region) {
-    this.setState({ region: region });
   }
 
   //This function is responsible for making the Places API call and storing the place predictions in the local State.
   async onChangeDestination(destination) {
+    console.log("Dest. Change.");
     this.setState({ destination });
     const apiCall = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${placeKey}&input=${destination}&location=${
-      this.state.coords.latitude
-    },${this.state.coords.longitude}&radius=3000`;
+      this.props.bluetooth.coords.latitude
+    },${this.props.bluetooth.coords.longitude}&radius=3000`;
     try {
       const destResults = await fetch(apiCall);
       const resultsJson = await destResults.json();
@@ -111,9 +129,9 @@ export default class MapScreen extends React.Component {
     try {
       const routeResult = await fetch(
         `https://maps.googleapis.com/maps/api/directions/json?origin=${
-          this.state.coords.latitude
+          this.props.bluetooth.coords.latitude
         },${
-          this.state.coords.longitude
+          this.props.bluetooth.coords.longitude
         }&destination=place_id:${placeID}&key=AIzaSyC9W1-LE3WBzlJQPRzFf-GTYw6C1QAMvJc`
       );
       const routeJson = await routeResult.json();
@@ -125,7 +143,10 @@ export default class MapScreen extends React.Component {
       });
       this.setState({ pointCoords, placeResults: [], destination: newDest });
       Keyboard.dismiss();
-      this.map.fitToCoordinates(pointCoords);
+      if (this.state.firstNav) {
+        this.setState({ firstNav: false });
+        this.map.fitToCoordinates(pointCoords);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -145,7 +166,9 @@ export default class MapScreen extends React.Component {
           this.setState({
             destOpacity: 100,
             checkName: "check",
-            cancelName: "cancel"
+            cancelName: "cancel",
+            placeID: prediction.place_id,
+            mainText: prediction.structured_formatting.main_text
           });
         }}
       >
@@ -162,8 +185,8 @@ export default class MapScreen extends React.Component {
             this.map = map;
           }}
           style={styles.map}
-          region={this.state.region}
-          onRegionChange={region => this.onRegionChange(region)}
+          initialRegion={this.state.region}
+          //onRegionChange={region => this.onRegionChange(region)}
           showsCompass={true}
           toolbarEnabled={true}
           loadingEnabled={true}
@@ -174,7 +197,7 @@ export default class MapScreen extends React.Component {
             strokeColor={Color.themeColor}
           />
           <MapView.Marker
-            coordinate={this.state.coords}
+            coordinate={this.props.bluetooth.coords}
             opacity={0.7}
             image={require("../assets/images/Bike.png")}
           />
@@ -196,7 +219,7 @@ export default class MapScreen extends React.Component {
         />
         <View style={styles.button}>
           <Button
-            title="Live Data"
+            title="            Live Data            "
             onPress={() => this.props.navigation.navigate("LiveData")}
           />
         </View>
@@ -243,7 +266,30 @@ const styles = StyleSheet.create({
     right: 16
   },
   button: {
-    paddingTop: 470,
-    paddingHorizontal: 75
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50
   }
 });
+
+//Redux functions
+
+function mapStateToProps(state) {
+  return {
+    bluetooth: state.bluetooth,
+    settings: state.settings,
+    profile: state.profile
+  };
+}
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ collectData: collectData }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  matchDispatchToProps
+)(MapScreen);

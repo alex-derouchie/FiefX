@@ -69,9 +69,9 @@ class SettingsScreen extends React.Component {
             <Picker
               style={{
                 height: 40,
-                width: 315,
+                width: 335,
                 borderWidth: 2,
-                paddingVertical: 15,
+                paddingTop: 15,
                 borderColor: "black",
                 color: "white",
                 backgroundColor: "#00A0E0"
@@ -100,7 +100,7 @@ class SettingsScreen extends React.Component {
               <Picker.Item label="30 Kilometers" value={30} />
             </Picker>
           </View>
-          <View style={styles.devButton}>
+          <View style={{ paddingHorizontal: 35 }}>
             <Button
               title="Update Goal"
               onPress={() => this.props.goalChange(this.state.distanceGoal)}

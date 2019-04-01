@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14
   },
   bigText: {
-    fontSize: 30,
+    fontSize: 26,
     color: "#535353",
     textAlign: "center",
     paddingVertical: 14,

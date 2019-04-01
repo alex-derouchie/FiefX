@@ -15,7 +15,7 @@ export default class RecoveryScreen extends React.Component {
     super(props);
     this.state = {
       answer: "",
-      question: "Sample Question"
+      question: "Mother's Maiden Name"
     };
   }
 

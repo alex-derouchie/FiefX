@@ -5,7 +5,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 import RecoveryScreen from "../screens/RecoveryScreen";
 import LockScreen from "../screens/LockScreen";
-import PassResesScreen from "../screens/PassResetScreen";
+import PassResetScreen from "../screens/PassResetScreen";
 import UserInfoScreen from "../screens/UserInfoScreen";
 
 //Stack of Screen components which are used before the user is logged in to the application
@@ -14,7 +14,7 @@ const AuthStack = createStackNavigator({
   Signup: SignupScreen,
   UserInfo: UserInfoScreen,
   Recovery: RecoveryScreen,
-  PassReset: PassResesScreen,
+  PassReset: PassResetScreen,
   Lock: LockScreen
 });
 

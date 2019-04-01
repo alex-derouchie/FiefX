@@ -11,6 +11,7 @@ import NavigationOptions from "../components/MainNavigationOptions";
 import WeeklyChart from "../components/WeeklyChart";
 import { connect } from "react-redux";
 import MapView from "react-native-maps";
+import { readUserInformation } from "../src/DatabaseFunctions";
 
 /*
 This is the React Component representing the HomeScreen of the application.
@@ -20,6 +21,17 @@ class HomeScreen extends React.Component {
   //This Object represents the top bar across the app and
   //handles the components and styling contained within the bar.
   static navigationOptions = NavigationOptions.navigationOptions;
+
+  componentDidMount() {
+    readUserInformation("Age");
+    readUserInformation("City");
+    readUserInformation("DailyDistance");
+    readUserInformation("DailyGoal");
+    readUserInformation("Name");
+    readUserInformation("TireSize");
+    readUserInformation("WeeklyDistance");
+    readUserInformation("bodyWeight");
+  }
 
   //Main body of the Home page
   render() {
