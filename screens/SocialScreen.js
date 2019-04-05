@@ -24,19 +24,21 @@ class SocialScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: {},
-      profilePic: "../assets/images/profilePic.png"
+      profilePic: require("../assets/images/profilePic.png"),
+      achievements: [0, 0, 0, 0]
     };
   }
 
   static navigationOptions = NavigationOptions.navigationOptions;
 
   componentWillMount() {
-    readUserInformation("Name");
-    console.log("log");
-    setTimeout(() => {
-      this.setState({ name: this.props.profile.returnedData });
-    }, 500);
+    if (this.props.profile.profileName == "Alex Derouchie") {
+      this.setState({ profilePic: require("../assets/images/Alex.jpg") });
+      this.setState({ achievements: this.props.profile.achievements });
+    } else {
+      this.setState({ profilePic: require("../assets/images/profilePic.png") });
+      this.setState({ achievements: [0, 0, 0, 0] });
+    }
   }
 
   //In the future, the majority of the data being displayed in the app will come from the
@@ -47,7 +49,7 @@ class SocialScreen extends React.Component {
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
             <Image
-              source={require("../assets/images/profilePic.png")}
+              source={this.state.profilePic}
               style={styles.profilePicture}
             />
           </View>
@@ -78,12 +80,15 @@ class SocialScreen extends React.Component {
             >
               <View style={styles.friendsContainer}>
                 <Image
-                  source={require("../assets/images/Alex.jpg")}
+                  source={require("../assets/images/RyRy.jpg")}
                   style={styles.friendPicture}
                 />
                 <View style={styles.friendTextBox}>
-                  <Text style={styles.friendText1}>Alex Derouchie</Text>
-                  <Text style={styles.friendText2}> Distance: </Text>
+                  <Text style={styles.friendText1}>Rylan Deck</Text>
+                  <Text style={styles.friendText2}>
+                    {" "}
+                    Distance: {this.props.profile.friendDistances[1]} Km
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -95,7 +100,10 @@ class SocialScreen extends React.Component {
               />
               <View style={styles.friendTextBox}>
                 <Text style={styles.friendText1}>Ben Kluge</Text>
-                <Text style={styles.friendText2}> Distance: </Text>
+                <Text style={styles.friendText2}>
+                  {" "}
+                  Distance: {this.props.profile.friendDistances[2]} Km
+                </Text>
               </View>
             </View>
             <View style={styles.friendsContainer}>
@@ -105,7 +113,10 @@ class SocialScreen extends React.Component {
               />
               <View style={styles.friendTextBox}>
                 <Text style={styles.friendText1}>Rick Astley</Text>
-                <Text style={styles.friendText2}> Distance: </Text>
+                <Text style={styles.friendText2}>
+                  {" "}
+                  Distance: {this.props.profile.friendDistances[0]} Km
+                </Text>
               </View>
             </View>
           </View>
@@ -117,7 +128,7 @@ class SocialScreen extends React.Component {
                 Travel 10000 Kilometers
               </Text>
               <Progress.Bar
-                progress={this.props.profile.achievements[0]}
+                progress={this.state.achievements[0]}
                 color={Colors.themeColor}
               />
             </View>
@@ -127,14 +138,14 @@ class SocialScreen extends React.Component {
                 Travel 10 Kilometers in one day
               </Text>
               <Progress.Bar
-                progress={this.props.profile.achievements[1]}
+                progress={this.state.achievements[1]}
                 color={Colors.themeColor}
               />
             </View>
             <View style={styles.achievementBox}>
               <Text style={styles.achievementText}> Travel for one hour</Text>
               <Progress.Bar
-                progress={this.props.profile.achievements[2]}
+                progress={this.state.achievements[2]}
                 color={Colors.themeColor}
               />
             </View>
@@ -144,7 +155,7 @@ class SocialScreen extends React.Component {
                 Travel in a different city
               </Text>
               <Progress.Bar
-                progress={this.props.profile.achievements[3]}
+                progress={this.state.achievements[3]}
                 color="#00FF88"
               />
             </View>

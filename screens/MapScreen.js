@@ -68,14 +68,6 @@ class MapScreen extends React.Component {
     setInterval(() => {
       if (this.props.profile.collectingData) {
         console.log("Executing");
-        // this.setState({
-        //   pointCoords: [
-        //     {
-        //       latitude: this.props.bluetooth.coords.latitude,
-        //       longitude: this.props.bluetooth.coords.longitude
-        //     }
-        //   ]
-        // });
         this.getRoute(this.state.placeID, this.state.mainText);
       }
     }, 750);

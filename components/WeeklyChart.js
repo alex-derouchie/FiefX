@@ -5,6 +5,24 @@ import { connect } from "react-redux";
 
 //This component is responsible for rendering the User's distance travelled per day in graph format.
 class WeeklyChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dailyDistances: [0, 0, 0, 0, 0, 0, 0]
+    };
+  }
+
+  //This is a placeholder to display what the app will look like upon initial login vs. when data has been collected.
+  componentWillMount() {
+    setTimeout(() => {
+      if (this.props.profile.profileName == "Alex Derouchie") {
+        this.setState({ dailyDistances: this.props.profile.dailyDistances });
+      } else {
+        this.setState({ dailyDistances: [0, 0, 0, 0, 0, 0, 0] });
+      }
+    }, 250);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -13,31 +31,31 @@ class WeeklyChart extends React.Component {
             data={[
               {
                 day: "Mon",
-                distance: this.props.profile.dailyDistances[0] * 1000
+                distance: this.state.dailyDistances[0] * 1000
               },
               {
                 day: "Tues",
-                distance: this.props.profile.dailyDistances[1] * 1000
+                distance: this.state.dailyDistances[1] * 1000
               },
               {
                 day: "Wed",
-                distance: this.props.profile.dailyDistances[2] * 1000
+                distance: this.state.dailyDistances[2] * 1000
               },
               {
                 day: "Thu",
-                distance: this.props.profile.dailyDistances[3] * 1000
+                distance: this.state.dailyDistances[3] * 1000
               },
               {
                 day: "Fri",
-                distance: this.props.profile.dailyDistances[4] * 1000
+                distance: this.state.dailyDistances[4] * 1000
               },
               {
                 day: "Sat",
-                distance: this.props.profile.dailyDistances[5] * 1000
+                distance: this.state.dailyDistances[5] * 1000
               },
               {
                 day: "Sun",
-                distance: this.props.profile.dailyDistances[6] * 1000
+                distance: this.state.dailyDistances[6] * 1000
               }
             ]}
             x="day"

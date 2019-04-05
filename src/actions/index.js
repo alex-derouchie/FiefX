@@ -18,3 +18,5 @@ export * from "./firebaseActions/updateTire";
 export * from "./firebaseActions/updateWDistance";
 export * from "./firebaseActions/updateWeight";
 export * from "./collectData";
+export * from "./btActions/BTSend";
+export * from "./updatePass";

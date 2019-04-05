@@ -8,6 +8,21 @@ import { connect } from "react-redux";
  * distance data compared to the distance data of the current users' friends.
  *****************************************************************************************/
 class FriendChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      friendDistances: []
+    };
+  }
+
+  componentWillMount() {
+    if (this.props.profile.profileName == "Alex Derouchie") {
+      this.setState({ friendDistances: this.props.profile.friendDistances });
+    } else {
+      this.setState({ friendDistances: [0, 0, 0, 0] });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -16,19 +31,19 @@ class FriendChart extends React.Component {
             data={[
               {
                 friend: "Ken",
-                distance: this.props.profile.friendDistances[0] * 1000
+                distance: this.state.friendDistances[0] * 1000
               },
               {
                 friend: "Rylan",
-                distance: this.props.profile.friendDistances[1] * 1000
+                distance: this.state.friendDistances[1] * 1000
               },
               {
                 friend: "Ben",
-                distance: this.props.profile.friendDistances[2] * 1000
+                distance: this.state.friendDistances[2] * 1000
               },
               {
                 friend: "Alex",
-                distance: this.props.profile.friendDistances[3] * 1000
+                distance: this.state.friendDistances[3] * 1000
               }
             ]}
             y="distance"

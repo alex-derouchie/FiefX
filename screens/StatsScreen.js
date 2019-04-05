@@ -21,6 +21,21 @@ This class represents the Analytics/Statistics page of the app.
 class StatsScreen extends React.Component {
   static navigationOptions = NavigationOptions.navigationOptions;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      dailyDistance: 0
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.profile.profileName == "Alex Derouchie") {
+      this.setState({
+        dailyDistance: this.props.profile.dailyDistances[4]
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -36,8 +51,7 @@ class StatsScreen extends React.Component {
               <View style={styles.pieBox}>
                 <Progress.Pie
                   progress={
-                    this.props.profile.dailyDistances[5] /
-                    this.props.settings.weeklyGoal
+                    this.state.dailyDistance / this.props.settings.dailyGoal
                   }
                   color="#33FF11"
                   size={150}
@@ -46,11 +60,11 @@ class StatsScreen extends React.Component {
               <View style={styles.todayTextBox}>
                 <Text style={styles.todayText1}>
                   {" "}
-                  Distance Goal: {this.props.settings.weeklyGoal} Km
+                  Distance Goal: {this.props.settings.dailyGoal} Km
                 </Text>
                 <Text style={styles.todayText1}>
                   {" "}
-                  Progress: {this.props.profile.dailyDistances[5]} Km
+                  Progress: {this.state.dailyDistance} Km
                 </Text>
               </View>
             </View>

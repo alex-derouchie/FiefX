@@ -12,14 +12,27 @@ the user's friends, such as weekly travel distances, achievements, recent activi
 and more. 
 */
 class ProfileScreen extends React.Component {
+  static navigationOptions = NavigationOptions.navigationOptions;
+
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: "",
+      profilePic: require("../assets/images/profilePic.png"),
+      dailyDistance: 0,
+      weeklyDistance: 0
     };
   }
 
-  static navigationOptions = NavigationOptions.navigationOptions;
+  componentWillMount() {
+    if (this.props.profile.profileName == "Alex Derouchie") {
+      this.setState({
+        profilePic: require("../assets/images/Alex.jpg"),
+        dailyDistance: this.props.profile.dailyDistances[4],
+        weeklyDistance: this.props.profile.weeklyDistance
+      });
+    }
+  }
 
   render() {
     return (
@@ -58,7 +71,7 @@ class ProfileScreen extends React.Component {
             <View style={styles.container}>
               <Text style={styles.text}>
                 {"  "}
-                Distance (Today): {this.props.firebase.dailyDistance}
+                Distance (Today): {this.state.dailyDistance} Km
               </Text>
             </View>
           </View>
@@ -66,7 +79,7 @@ class ProfileScreen extends React.Component {
             <View style={styles.container}>
               <Text style={styles.text}>
                 {"  "}
-                Distance (This Week): {this.props.firebase.weeklyDistance}
+                Distance (This Week): {this.state.weeklyDistance} Km
               </Text>
             </View>
           </View>
@@ -74,7 +87,7 @@ class ProfileScreen extends React.Component {
             <View style={styles.container}>
               <Text style={styles.text}>
                 {" "}
-                Distance Goal: {this.props.settings.weeklyGoal}
+                Distance Goal: {this.props.settings.dailyGoal * 7} Km
               </Text>
             </View>
           </View>

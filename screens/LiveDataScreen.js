@@ -10,6 +10,8 @@ import {
 import NavigationOptions from "../components/MainNavigationOptions";
 import { connect } from "react-redux";
 import UserMap from "../components/UserMap";
+import { bindActionCreators } from "redux";
+import { collectData } from "../src/actions/index";
 
 //This will be updated to Redux global User Position
 const markerLocation = {
@@ -143,7 +145,11 @@ function mapStateToProps(state) {
   };
 }
 
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ collectData: collectData }, dispatch);
+}
+
 export default connect(
   mapStateToProps,
-  null
+  matchDispatchToProps
 )(LiveDataScreen);

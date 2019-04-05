@@ -1,6 +1,7 @@
 import store from "./store";
 import * as actions from "./actions";
 
+//Sample of messages collected from embedded system for demonstration mode
 const strings = [
   "$GPGLL,0045.4206,N,00075.6789,W*75",
   "$TA|0140",
@@ -139,8 +140,11 @@ const strings = [
 var count = 0;
 
 //main function responsible for ingesting bluetooth data and dispatching actions to update the global Redux State with the new data.
+//Currently, the function is reading from demo array, but can easily be switched to BT messages upon package support update.
 export function updateBluetooth() {
   var btString = strings[count];
+
+  //Parse strings being recieved from bluetooth to determine command and dispact action accordingly.
   if (btString.substring(1, 3) == "GP") {
     if (btString.substring(3, 6) == "VTG") {
       store.dispatch(
@@ -192,7 +196,7 @@ export function updateBluetooth() {
     store.dispatch(actions.updateTach(parseFloat(btString.substring(4, 8))));
     console.log("TA");
   } else if (btString.substring(1, 3) == "--") {
-    count = -1;
+    count = -1; //Reset demo string
   } else {
     console.log("Bluetooth Error 1.");
   }

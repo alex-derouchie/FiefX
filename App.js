@@ -25,6 +25,8 @@ class YourApp extends Component {
     firebase.initializeApp(config);
     console.log("Firestore Initialized");
 
+    console.disableYellowBox = true;
+
     setInterval(() => {
       if (this.props.profile.collectingData) {
         updateBluetooth();

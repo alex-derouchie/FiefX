@@ -1,23 +1,41 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import TabBarIcon from "../components/TabBarIcon";
 import Color from "../constants/Colors";
+import { connect } from "react-redux";
 
 /*
 This class represents the Lock page of the app. It is a non-scrollable screen
 that locks you out of all other app functionality until the password is presented.
 */
-export default class LockScreen extends React.Component {
+class LockScreen extends React.Component {
   //This object does not display the header bar that the rest of the app does display.
   static navigationOptions = {
     header: null
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      textEntry: ""
+    };
+  }
+
+  unlock() {
+    if (this.state.textEntry == this.props.profile.curPass) {
+      this.props.navigation.navigate("Home");
+    } else {
+      Alert.alert("Error", "Incorrect Password", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.background}>
+        <View style={styles.blankSpace} />
         <View style={styles.center}>
-          <View style={styles.blankSpace} />
           <TabBarIcon name={"lock"} size={148} />
           <Text style={styles.lockText}>Your bike is locked!</Text>
         </View>
@@ -28,14 +46,22 @@ export default class LockScreen extends React.Component {
             placeholder=" Password"
             placeholderTextColor="#FFFFFF"
             autoCapitalize="none"
+            value={this.state.textEntry}
+            secureTextEntry={true}
+            onChangeText={text => {
+              this.setState({ textEntry: text });
+            }}
           />
           <View style={{ padding: 50 }}>
             <Button
               title="Unlock"
-              onPress={() => this.props.navigation.navigate("Home")}
+              onPress={() => this.unlock()}
               style={{ width: 150 }}
             />
           </View>
+          <View style={styles.blankSpace} />
+          <View style={styles.blankSpace} />
+          <View style={styles.blankSpace} />
         </View>
       </View>
     );
@@ -49,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.themeColor
   },
   blankSpace: {
-    paddingTop: 120
+    paddingTop: 60
   },
   background: {
     flex: 1,
@@ -68,6 +94,20 @@ const styles = StyleSheet.create({
     margin: 15,
     height: 40,
     borderColor: "#FFFFFF",
-    borderWidth: 1
+    borderWidth: 1,
+    color: "#FFFFFF"
   }
 });
+
+//Redux Functions
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(LockScreen);

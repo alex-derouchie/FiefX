@@ -22,6 +22,16 @@ class HomeScreen extends React.Component {
   //handles the components and styling contained within the bar.
   static navigationOptions = NavigationOptions.navigationOptions;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      profilePic: require("../assets/images/profilePic.png"),
+      dailyDistance: 0,
+      weeklyDistance: 0
+    };
+  }
+
+  //Updates Redux with correct information upon logging into the application
   componentDidMount() {
     readUserInformation("Age");
     readUserInformation("City");
@@ -31,6 +41,36 @@ class HomeScreen extends React.Component {
     readUserInformation("TireSize");
     readUserInformation("WeeklyDistance");
     readUserInformation("bodyWeight");
+    readUserInformation("Security Question");
+    readUserInformation("SecurityQAnswer");
+    readUserInformation("MonDist");
+    readUserInformation("TuesDist");
+    readUserInformation("WedDist");
+    readUserInformation("ThursDist");
+    readUserInformation("FriDist");
+    readUserInformation("SatDist");
+    readUserInformation("SunDist");
+    readUserInformation("FriendDist1");
+    readUserInformation("FriendDist2");
+    readUserInformation("FriendDist3");
+    readUserInformation("FriendDist4");
+    readUserInformation("achievement1");
+    readUserInformation("achievement2");
+    readUserInformation("achievement3");
+    readUserInformation("achievement4");
+    setTimeout(() => {
+      if (this.props.profile.profileName == "Alex Derouchie") {
+        this.setState({
+          profilePic: require("../assets/images/Alex.jpg"),
+          dailyDistance: this.props.profile.dailyDistances[4],
+          weeklyDistance: this.props.profile.weeklyDistance
+        });
+      } else {
+        this.setState({
+          profilePic: require("../assets/images/profilePic.png")
+        });
+      }
+    }, 500);
   }
 
   //Main body of the Home page
@@ -85,24 +125,26 @@ class HomeScreen extends React.Component {
             >
               <View style={styles.socialCard}>
                 <Image
-                  source={require("../assets/images/RyRy.jpg")}
+                  source={this.state.profilePic}
                   style={styles.profilePicture}
                 />
                 <View style={styles.socialText}>
-                  <Text style={styles.titleText2}> Rylan Deck</Text>
-                  <Text style={styles.subText}>
-                    {"       Daily Distance: "}{" "}
-                    {this.props.profile.dailyDistances[5]} {"Km"}
+                  <Text style={styles.titleText2}>
+                    {"    "} {this.props.profile.profileName}
                   </Text>
                   <Text style={styles.subText}>
-                    {"       Weekly Distance: "}{" "}
-                    {this.props.profile.weeklyDistance} {"Km"}
+                    {"       Daily Distance: "} {this.state.dailyDistance}{" "}
+                    {"Km"}
+                  </Text>
+                  <Text style={styles.subText}>
+                    {"       Weekly Distance: "} {this.state.weeklyDistance}{" "}
+                    {"Km"}
                   </Text>
                 </View>
               </View>
               <View style={styles.friendsContainer}>
                 <Image
-                  source={require("../assets/images/Alex.jpg")}
+                  source={require("../assets/images/RyRy.jpg")}
                   style={styles.friendPicture}
                 />
                 <Image
@@ -215,7 +257,8 @@ const styles = StyleSheet.create({
 //Redux function responsible for assigning the state in the root index.js to this.props
 function mapStateToProps(state) {
   return {
-    profile: state.profile //access ProfileReducer from this.props.profile
+    profile: state.profile, //access ProfileReducer from this.props.profile
+    settings: state.settings
   };
 }
 

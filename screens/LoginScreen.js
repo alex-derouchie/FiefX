@@ -12,6 +12,8 @@ import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
 import { signInWithParams } from "../src/DatabaseFunctions";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { updatePass } from "../src/actions/index";
 
 /*
 This class represents the Login page of the app. It is the root of the 
@@ -37,7 +39,6 @@ class LoginScreen extends React.Component {
   // have valid data in them, then pauses long enough for Google to respond to the function
   // call, at which point it either navigates to the HomeScreen or denies access to the app.
   signIn() {
-    console.log("Test1");
     if (this.state.password == "" || this.state.email == "") {
       Alert.alert("Error", "There are empty fields", [{ text: "Okay" }], {
         cancelable: false
@@ -53,7 +54,6 @@ class LoginScreen extends React.Component {
     } else {
       signInWithParams(this.state.email, this.state.password);
       setTimeout(() => {
-        console.log("Test2");
         if (this.props.profile.signedIn) {
           this.props.navigation.navigate("Home");
         } else {
@@ -66,7 +66,7 @@ class LoginScreen extends React.Component {
             }
           );
         }
-      }, 1500);
+      }, 1200);
     }
   }
 
@@ -92,7 +92,10 @@ class LoginScreen extends React.Component {
           placeholderTextColor="#FFFFFF"
           autoCapitalize="none"
           secureTextEntry={true}
-          onChangeText={text => this.setState({ password: text })}
+          onChangeText={text => {
+            this.setState({ password: text });
+            this.props.updatePass(text);
+          }}
         />
 
         <View style={styles.buttonView}>
@@ -162,7 +165,11 @@ function mapStateToProps(state) {
   };
 }
 
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ updatePass: updatePass }, dispatch);
+}
+
 export default connect(
   mapStateToProps,
-  null
+  matchDispatchToProps
 )(LoginScreen);

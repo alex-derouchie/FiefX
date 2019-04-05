@@ -68,7 +68,22 @@ export default class SignupScreen extends React.Component {
         addNewUserInformation("SecurityQAnswer", this.state.answer);
         addNewUserInformation("WeeklyDistance", 0);
         addNewUserInformation("DailyDistance", 0);
-        addNewUserInformation("WeeklyGoal", 5);
+        addNewUserInformation("WeeklyGoal", 0);
+        addNewUserInformation("MonDist", 0);
+        addNewUserInformation("TuesDist", 0);
+        addNewUserInformation("WedDist", 0);
+        addNewUserInformation("ThursDist", 0);
+        addNewUserInformation("FriDist", 0);
+        addNewUserInformation("SatDist", 0);
+        addNewUserInformation("SunDist", 0);
+        addNewUserInformation("FriendDist1", 0);
+        addNewUserInformation("FriendDist2", 0);
+        addNewUserInformation("FriendDist3", 0);
+        addNewUserInformation("FriendDist4", 0);
+        addNewUserInformation("achievement1", 0);
+        addNewUserInformation("achievement2", 0);
+        addNewUserInformation("achievement3", 0);
+        addNewUserInformation("achievement4", 0);
       }, 8000);
     }
   }

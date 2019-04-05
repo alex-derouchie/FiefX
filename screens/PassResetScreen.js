@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
 
@@ -17,6 +17,21 @@ export default class RecoveryScreen extends React.Component {
       pass: "",
       passConfirm: ""
     };
+  }
+
+  passReset() {
+    if (
+      this.state.pass.length >= 8 &&
+      this.state.pass == this.state.passConfirm
+    ) {
+      //Insert Redux Update Here
+      //Insert Firebase updates here
+      this.props.navigation.navigate("Login");
+    } else {
+      Alert.alert("Error", "Input Invalid", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    }
   }
 
   render() {
@@ -53,7 +68,7 @@ export default class RecoveryScreen extends React.Component {
           <Button
             title="Reset Password"
             onPress={() => {
-              this.props.navigation.navigate("Login");
+              this.passReset();
             }}
           />
         </View>

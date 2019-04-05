@@ -1,14 +1,23 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Alert
+} from "react-native";
 import AuthNavigationOptions from "../components/AuthNavigationOptions";
 import Color from "../constants/Colors";
+import { connect } from "react-redux";
 
 /*
 This class represents the Password Recovery page of the app. In the future, it will
 ask the security question that the user chose upon registration. For now, it's mostly
 a filler page.
 */
-export default class RecoveryScreen extends React.Component {
+class RecoveryScreen extends React.Component {
   static navigationOptions = AuthNavigationOptions.navigationOptions;
 
   constructor(props) {
@@ -19,14 +28,24 @@ export default class RecoveryScreen extends React.Component {
     };
   }
 
+  checkAns() {
+    if (this.props.settings.lastSA == this.state.answer) {
+      this.props.navigation.navigate("PassReset");
+    } else {
+      Alert.alert("Error", "Invalid Answer", [{ text: "Okay" }], {
+        cancelable: false
+      });
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.blankSpace} />
         <Text style={styles.bigText}>Password Recovery</Text>
         <Text style={styles.blankSpace} />
         <Text style={styles.smallText}>
-          Security Question: {this.state.question}
+          Security Question: {this.props.settings.lastSQ}
         </Text>
         <TextInput
           style={styles.input}
@@ -43,12 +62,15 @@ export default class RecoveryScreen extends React.Component {
           <Button
             title="Recover Account"
             onPress={() => {
-              this.props.navigation.navigate("PassReset");
+              this.checkAns();
             }}
           />
         </View>
         <Text style={styles.blankSpace} />
-      </View>
+        <Text style={styles.blankSpace} />
+        <Text style={styles.blankSpace} />
+        <Text style={styles.blankSpace} />
+      </ScrollView>
     );
   }
 }
@@ -85,3 +107,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF"
   }
 });
+
+//Redux Functions
+function mapStateToProps(state) {
+  return {
+    settings: state.settings
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(RecoveryScreen);

@@ -28,7 +28,8 @@ class SettingsScreen extends React.Component {
       titleTextColor: "",
       headerTextColor: "",
       textColor: "",
-      themeColor: ""
+      themeColor: "",
+      pollingRate: 30
     };
   }
 
@@ -79,7 +80,6 @@ class SettingsScreen extends React.Component {
               mode="dropdown"
               selectedValue={this.state.distanceGoal}
               onValueChange={(itemValue, itemIndex) => {
-                console.log("Updating Goal...");
                 this.setState({ distanceGoal: itemValue });
               }}
             >
@@ -106,7 +106,66 @@ class SettingsScreen extends React.Component {
               onPress={() => this.props.goalChange(this.state.distanceGoal)}
             />
           </View>
+          <View style={styles.devButton}>
+            <Text style={styles.smallText}>
+              Secure mode polling (less updates save power):
+            </Text>
+            <Picker
+              style={{
+                height: 40,
+                width: 335,
+                borderWidth: 2,
+                paddingTop: 15,
+                borderColor: "black",
+                color: "white",
+                backgroundColor: "#00A0E0"
+              }}
+              mode="dropdown"
+              selectedValue={this.state.pollingRate}
+              onValueChange={(itemValue, itemIndex) => {
+                this.setState({ pollingRate: itemValue });
+              }}
+            >
+              <Picker.Item label="10 Seconds" value={10} />
+              <Picker.Item label="30 Seconds" value={30} />
+              <Picker.Item label="1 minute" value={60} />
+              <Picker.Item label="2 minutes" value={120} />
+              <Picker.Item label="3 minutes" value={180} />
+              <Picker.Item label="5 minutes" value={300} />
+              <Picker.Item label="7 minutes" value={420} />
+              <Picker.Item label="10 minutes" value={600} />
+              <Picker.Item label="30 minutes (not recommended)" value={1800} />
+            </Picker>
+          </View>
+          <View style={{ paddingHorizontal: 35, paddingBottom: 40 }}>
+            <Button
+              title="Update Polling Rate"
+              onPress={() => this.props.goalChange(this.state.distanceGoal)}
+            />
+          </View>
 
+          <View style={{ padding: 35 }}>
+            <Button
+              title="Hardware Reset"
+              onPress={() => {
+                Alert.alert(
+                  "Are you sure?",
+                  "This will reset the device to its factory settings and log you out.",
+                  [
+                    { text: "Cancel" },
+                    {
+                      text: "Reset",
+                      onPress: () => {
+                        signOut();
+                        this.props.navigation.navigate("Login");
+                      }
+                    }
+                  ],
+                  { cancelable: false }
+                );
+              }}
+            />
+          </View>
           <Text style={styles.blankSpace} />
           <Text style={styles.blankSpace} />
         </View>
@@ -147,7 +206,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginHorizontal: 15,
     marginBottom: 10,
-    color: "#838383"
+    color: "#838383",
+    paddingTop: 20
   },
   mediumText: {
     fontSize: 18,

@@ -138,6 +138,7 @@ export function signInWithParams(email, password) {
       active_uid = currentUser.uid;
 
       store.dispatch(actions.updateSignIn(true));
+      readUserInformation("Name");
 
       //Sign In Successful
       console.log("Sign in Worked");
@@ -688,6 +689,36 @@ function updateRedux(infoType, infoVal) {
     store.dispatch(actions.updateWDistance(infoVal.key));
   } else if (infoType == "bodyWeight") {
     store.dispatch(actions.updateWeight(infoVal.key));
+  } else if (infoType == "FriendDist1") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "FriendDist2") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "FriendDist3") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "FriendDist4") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "MonDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "TuesDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "WedDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "ThursDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "FriDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "SatDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "SunDist") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "achievement1") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "achievement2") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "achievement3") {
+    //Dispatch Redux Action to update Value
+  } else if (infoType == "achievement4") {
+    //Dispatch Redux Action to update Value
   }
 }
 
