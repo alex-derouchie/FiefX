@@ -15,12 +15,7 @@ import AppNavigator from "./navigation/AppNavigator";
 class YourApp extends Component {
   componentWillMount() {
     const config = {
-      apiKey: "AIzaSyDHD8AFvTRKau3Ao2NE8Qv3nGRgj7OeXM8",
-      authDomain: "testproj-7213b.firebaseapp.com",
-      databaseURL: "https://testproj-7213b.firebaseio.com",
-      projectId: "testproj-7213b",
-      storageBucket: "testproj-7213b.appspot.com",
-      messagingSenderId: "384434208146"
+      //ADD CONFIG HERE (Removed for security purposes)
     };
     firebase.initializeApp(config);
     console.log("Firestore Initialized");

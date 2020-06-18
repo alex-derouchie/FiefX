@@ -131,7 +131,7 @@ export function signInWithParams(email, password) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(function(result) {
+    .then(function (result) {
       //Get the token
       //var token = result.credential().accessToken;
       currentUser = result.user;
@@ -145,7 +145,7 @@ export function signInWithParams(email, password) {
       console.log(active_uid);
       //console.log(token);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       //Sign In Error
       console.log("Sign in error");
 
@@ -173,7 +173,7 @@ export function createNewAccount(email, password) {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(function(result) {
+    .then(function (result) {
       //Sign in the user
       currentUser = result.user;
       active_uid = currentUser.uid;
@@ -183,7 +183,7 @@ export function createNewAccount(email, password) {
       //Create the collection documents
       initializeCollectionDocuments();
     })
-    .catch(function(error) {
+    .catch(function (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 
@@ -198,7 +198,7 @@ export function signOut() {
   firebase
     .auth()
     .signOut()
-    .then(function(result) {
+    .then(function (result) {
       //Reset the Auth Globals
       currentUser = null;
       active_uid = null;
@@ -208,7 +208,7 @@ export function signOut() {
       console.log("Signed Out");
       //Sign out successful
     })
-    .catch(function(error) {
+    .catch(function (error) {
       //Error signing out
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -538,10 +538,10 @@ function writeDataToL1Document(collectionID_L1, documentID_L1, key, value) {
     .set({
       key: value
     })
-    .then(function() {
+    .then(function () {
       console.log("Document written with to firebase");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error adding document: ", error);
     });
 }
@@ -567,10 +567,10 @@ function writeDataToL2Document(
     .set({
       key: value
     })
-    .then(function() {
+    .then(function () {
       console.log("Document written with to firebase");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error adding document: ", error);
     });
 }
@@ -600,10 +600,10 @@ function writeDataToL3Document(
     .set({
       key: value
     })
-    .then(function() {
+    .then(function () {
       console.log("Document written with to firebase");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error adding document: ", error);
     });
 }
@@ -619,7 +619,7 @@ function readFromL1Document(collectionID_L1, documentID_L1) {
     .collection(collectionID_L1)
     .doc(documentID_L1)
     .get()
-    .then(function(doc) {
+    .then(function (doc) {
       if (doc.exists) {
         //The document exists
         //Do something with the data
@@ -650,7 +650,7 @@ function readFromL2Document(
     .collection(collectionID_L2)
     .doc(documentID_L2)
     .get()
-    .then(function(doc) {
+    .then(function (doc) {
       if (doc.exists) {
         //The document exists
         //Do something with the data
@@ -689,154 +689,124 @@ function updateRedux(infoType, infoVal) {
     store.dispatch(actions.updateWDistance(infoVal.key));
   } else if (infoType == "bodyWeight") {
     store.dispatch(actions.updateWeight(infoVal.key));
-  } else if (infoType == "FriendDist1") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "FriendDist2") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "FriendDist3") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "FriendDist4") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "MonDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "TuesDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "WedDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "ThursDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "FriDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "SatDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "SunDist") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "achievement1") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "achievement2") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "achievement3") {
-    //Dispatch Redux Action to update Value
-  } else if (infoType == "achievement4") {
-    //Dispatch Redux Action to update Value
   }
-}
 
-//Generic L3 Document
-function readFromL3Document(
-  collectionID_L1,
-  documentID_L1,
-  collectionID_L2,
-  documentID_L2,
-  collectionID_L3,
-  documentID_L3
-) {
-  //Make sure the database has been initialized
-  if (databaseInstance == null) {
-    initializeFirebase();
-  } //Initialize the database if it is not already initialized
-  //Read the data from the database
-  databaseInstance
-    .collection(collectionID_L1)
-    .doc(documentID_L1)
-    .collection(collectionID_L2)
-    .doc(documentID_L2)
-    .collection(collectionID_L3)
-    .doc(documentID_L3)
-    .get()
-    .then(function(doc) {
-      if (doc.exists) {
-        //The document exists
-        //Do something with the data
-        console.log("Document Data: ", doc.data());
-        return doc.data();
-      } else {
-        //The document does not exist
-        console.log("No document exists at this location");
-      }
-    });
-}
+  //Generic L3 Document
+  function readFromL3Document(
+    collectionID_L1,
+    documentID_L1,
+    collectionID_L2,
+    documentID_L2,
+    collectionID_L3,
+    documentID_L3
+  ) {
+    //Make sure the database has been initialized
+    if (databaseInstance == null) {
+      initializeFirebase();
+    } //Initialize the database if it is not already initialized
+    //Read the data from the database
+    databaseInstance
+      .collection(collectionID_L1)
+      .doc(documentID_L1)
+      .collection(collectionID_L2)
+      .doc(documentID_L2)
+      .collection(collectionID_L3)
+      .doc(documentID_L3)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          //The document exists
+          //Do something with the data
+          console.log("Document Data: ", doc.data());
+          return doc.data();
+        } else {
+          //The document does not exist
+          console.log("No document exists at this location");
+        }
+      });
+  }
 
-//"Update" database functions
-//Generic L1 Document
-function updateL1Document(collectionID_L1, documentID_L1, key, updatedVal) {
-  //Make sure the database has been initialized
-  if (databaseInstance == null) {
-    initializeFirebase();
-  } //Initialize the database if it is not already initialized
-  //Update data in the database
-  databaseInstance
-    .collection(collectionID_L1)
-    .doc(documentID_L1)
-    .update({
-      key: updatedVal
-    })
-    .then(function() {
-      console.log("Document Updated");
-    })
-    .catch(function(error) {
-      console.error("Error Updating Document: ", error);
-    });
-}
-//Generic L2 Document
-function updateL2Document(
-  collectionID_L1,
-  documentID_L1,
-  collectionID_L2,
-  documentID_L2,
-  key,
-  updatedVal
-) {
-  //Make sure the database has been initialized
-  if (databaseInstance == null) {
-    initializeFirebase();
-  } //Initialize the database if it is not already initialized
-  //Update data in the database
-  databaseInstance
-    .collection(collectionID_L1)
-    .doc(documentID_L1)
-    .collection(collectionID_L2)
-    .doc(documentID_L2)
-    .update({
-      key: updatedVal
-    })
-    .then(function() {
-      console.log("Document Updated");
-    })
-    .catch(function(error) {
-      console.error("Error Updating Document: ", error);
-    });
-}
-//Generic L3 Document
-function updateL3Document(
-  collectionID_L1,
-  documentID_L1,
-  collectionID_L2,
-  documentID_L2,
-  collectionID_L3,
-  documentID_L3,
-  key,
-  updatedVal
-) {
-  //Make sure the database has been initialized
-  if (databaseInstance == null) {
-    initializeFirebase();
-  } //Initialize the database if it is not already initialized
-  //Update data in the database
-  databaseInstance
-    .collection(collectionID_L1)
-    .doc(documentID_L1)
-    .collection(collectionID_L2)
-    .doc(documentID_L2)
-    .collection(collectionID_L3)
-    .doc(documentID_L3)
-    .update({
-      key: updatedVal
-    })
-    .then(function() {
-      console.log("Document Updated");
-    })
-    .catch(function(error) {
-      console.error("Error Updating Document: ", error);
-    });
+  //"Update" database functions
+  //Generic L1 Document
+  function updateL1Document(collectionID_L1, documentID_L1, key, updatedVal) {
+    //Make sure the database has been initialized
+    if (databaseInstance == null) {
+      initializeFirebase();
+    } //Initialize the database if it is not already initialized
+    //Update data in the database
+    databaseInstance
+      .collection(collectionID_L1)
+      .doc(documentID_L1)
+      .update({
+        key: updatedVal
+      })
+      .then(function () {
+        console.log("Document Updated");
+      })
+      .catch(function (error) {
+        console.error("Error Updating Document: ", error);
+      });
+  }
+  //Generic L2 Document
+  function updateL2Document(
+    collectionID_L1,
+    documentID_L1,
+    collectionID_L2,
+    documentID_L2,
+    key,
+    updatedVal
+  ) {
+    //Make sure the database has been initialized
+    if (databaseInstance == null) {
+      initializeFirebase();
+    } //Initialize the database if it is not already initialized
+    //Update data in the database
+    databaseInstance
+      .collection(collectionID_L1)
+      .doc(documentID_L1)
+      .collection(collectionID_L2)
+      .doc(documentID_L2)
+      .update({
+        key: updatedVal
+      })
+      .then(function () {
+        console.log("Document Updated");
+      })
+      .catch(function (error) {
+        console.error("Error Updating Document: ", error);
+      });
+  }
+  //Generic L3 Document
+  function updateL3Document(
+    collectionID_L1,
+    documentID_L1,
+    collectionID_L2,
+    documentID_L2,
+    collectionID_L3,
+    documentID_L3,
+    key,
+    updatedVal
+  ) {
+    //Make sure the database has been initialized
+    if (databaseInstance == null) {
+      initializeFirebase();
+    } //Initialize the database if it is not already initialized
+    //Update data in the database
+    databaseInstance
+      .collection(collectionID_L1)
+      .doc(documentID_L1)
+      .collection(collectionID_L2)
+      .doc(documentID_L2)
+      .collection(collectionID_L3)
+      .doc(documentID_L3)
+      .update({
+        key: updatedVal
+      })
+      .then(function () {
+        console.log("Document Updated");
+      })
+      .catch(function (error) {
+        console.error("Error Updating Document: ", error);
+      });
+  }
 }

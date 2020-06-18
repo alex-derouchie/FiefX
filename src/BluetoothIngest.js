@@ -142,7 +142,7 @@ var count = 0;
 //main function responsible for ingesting bluetooth data and dispatching actions to update the global Redux State with the new data.
 //Currently, the function is reading from demo array, but can easily be switched to BT messages upon package support update.
 export function updateBluetooth() {
-  var btString = strings[count];
+  var btString = strings[count]; //TODO: read data from bluetooth package
 
   //Parse strings being recieved from bluetooth to determine command and dispact action accordingly.
   if (btString.substring(1, 3) == "GP") {

@@ -103,7 +103,7 @@ class MapScreen extends React.Component {
     this.setState({ destination });
     const apiCall = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${placeKey}&input=${destination}&location=${
       this.props.bluetooth.coords.latitude
-    },${this.props.bluetooth.coords.longitude}&radius=3000`;
+      },${this.props.bluetooth.coords.longitude}&radius=3000`;
     try {
       const destResults = await fetch(apiCall);
       const resultsJson = await destResults.json();
@@ -121,10 +121,10 @@ class MapScreen extends React.Component {
     try {
       const routeResult = await fetch(
         `https://maps.googleapis.com/maps/api/directions/json?origin=${
-          this.props.bluetooth.coords.latitude
+        this.props.bluetooth.coords.latitude
         },${
-          this.props.bluetooth.coords.longitude
-        }&destination=place_id:${placeID}&key=AIzaSyC9W1-LE3WBzlJQPRzFf-GTYw6C1QAMvJc`
+        this.props.bluetooth.coords.longitude
+        }&destination=place_id:${placeID}&key=SECRET_KEY(BLANK)`
       );
       const routeJson = await routeResult.json();
       const points = PolyLine.decode(

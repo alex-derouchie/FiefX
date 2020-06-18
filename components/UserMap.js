@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import MapView from "react-native-maps";
 
 //This object exports a component that returns a Map object to be rendered by the calling component.
+//PLACEHOLDER => lat/long values determined by user location on release
 const UserMap = props => {
   return (
     <View style={styles.container}>
