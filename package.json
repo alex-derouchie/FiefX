@@ -19,7 +19,7 @@
     "react-redux": "^6.0.0",
     "react-timer-mixin": "^0.13.4",
     "redux": "^4.0.1",
-    "victory-native": "^31.0.0"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
