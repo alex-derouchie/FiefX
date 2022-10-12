@@ -10,7 +10,7 @@
     "firebase": "^5.8.5",
     "lodash": "^4.17.11",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.4",
+    "react-native": "0.70.3",
     "react-native-maps": "^0.22.1",
     "react-native-progress": "^3.5.0",
     "react-native-svg": "^8.0.8",
